@@ -6,6 +6,21 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import '../static/css/bootstrap.css'
+import '../static/css/font-awesome.css'
+import '../static/css/lightbox.css'
+import '../static/css/style.css'
+
+import $ from 'jquery'
+
+import '../static/js/bootstrap.js'
+import '../static/js/easing.js'
+import '../static/js/move-top.js'
+import '../static/js/jquery-1.11.1.min.js'
+import '../static/js/responsiveslides.min.js'
+import '../static/js/SmoothScroll.min.js'
+import '../static/js/lightbox-plus-jquery.min.js'
+
 Vue.use(VueAxios,axios);
 
 Vue.config.productionTip = false
