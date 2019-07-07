@@ -19,7 +19,8 @@
 					<div class="left-blog">
 						<div class="blog-left">
 							<div class="blog-left-left">
-								<p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on June 2, 2015 &nbsp;&nbsp; <a href="#">Comments (10)</a></p>
+								<p>发布者 <span v-text="blog1" style="color:red;"></span> &nbsp;&nbsp;<span v-text="blog1Time"></span></p>
+								<!-- <p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on June 2, 2015 &nbsp;&nbsp; <a href="#">Comments (10)</a></p> -->
 								<a href="single.html"><img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" /></a>
 							</div>
 							<div class="blog-left-right">
@@ -84,7 +85,7 @@
 					</nav>
 				</div>
 				<div class="col-md-4 blog-top-right-grid">
-					<div class="Categories">
+					<!-- <div class="Categories">
 						<h3>Categories</h3>
 						<ul>
 							<li><a href="#">Phasellus sem leo, interdum quis risus</a></li>
@@ -94,20 +95,11 @@
 							<li><a href="#">Cum sociis natoque penatibus et magnis</a></li>
 							<li><a href="#">Suspendisse nec magna id ex pretium</a></li>
 						</ul>
-					</div>
+					</div> -->
 					<div class="Categories">
 						<h3>Archive</h3>
 						<ul class="marked-list offs1">
-							<li><a href="#">May 2015 (7)</a></li>
-							<li><a href="#">April 2015 (11)</a></li>
-							<li><a href="#">March 2015 (12)</a></li>
-							<li><a href="#">February 2015 (14)</a> </li>
-							<li><a href="#">January 2015 (10)</a></li>    
-							<li><a href="#">December 2014 (12)</a></li>
-							<li><a href="#">November 2014 (8)</a></li>
-							<li><a href="#">October 2014 (7)</a> </li>
-							<li><a href="#">September 2014 (8)</a></li>
-							<li><a href="#">August 2014 (6)</a></li>                          
+							<li v-for="site in sites" :key="site"> <a href="#">{{site.name}}</a></li>                        
 						</ul>
 					</div>
 					<div class="comments">
@@ -166,22 +158,37 @@ export default {
   data(){
     console.log(this.loll)
     return{
-      lol: this.loll
+	  lol: this.loll,
+	  blog1: 'Posted By ??? on June 2, 2015',
+	  blog1Time: '1999-02-29',
+	  sites:[{name:'???'},
+	  {name:'!!!'}]
     }
   },
   components: {
 		buttom,
 		banner
 		},
+  methods:{
+	  getArchive(){
+		  this.axios.get('http://47.102.116.29/api/Activities/')
+          .then((response) => {
+			this.sites.push({name: response.data[0].actTime.slice(0,7)})
+          })
+	  }
+  },
+  mounted() {
+	this.getArchive()
+  },
   created() {
     // <img src="http://47.102.116.29:5050/image/head/head001.jpg">
-    this.axios.get('http://47.102.116.29/api/Images')
+    this.axios.get('http://47.102.116.29/api/Activities/')
           .then((response) => {
-            console.log("2231")
-            console.log(response.data[0].imageUrl)
-            this.loll='http://47.102.116.29:5050/'+response.data[0].imageUrl
-            console.log(this.loll)
-          })
+			this.blog1=response.data[0].activityName
+			this.blog1Time=response.data[0].actTime.slice(0,4)+'年'+response.data[0].actTime.slice(5,7)+'月'+response.data[0].actTime.slice(8,10)+'日'
+		  })
   },
 };
 </script>
+
+// archive --need activityId

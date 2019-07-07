@@ -103,8 +103,7 @@
 						</div>
 						<div class="col-md-6 agileits-left">
 							<figure class="effect-chico">
-								<img src="http://47.102.116.29:5050/image/head/head001.
-                                " alt=" " />
+								<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
 								<figcaption>
 									<h4>Nam ornare</h4>
 									<p>Chico's main fear was missing the morning bus.</p>
@@ -259,22 +258,6 @@
 <script>
 import buttom from '@/components/Buttom'
 
-$(function () {
-	// Slideshow 4
-    $("#slider4").responsiveSlides({
-    auto: true,
-    pager:true,
-    nav:true,
-    speed: 500,
-    namespace: "callbacks",
-    before: function () {
-        $('.events').append("<li>before event fired.</li>");
-    },
-    after: function () {
-        $('.events').append("<li>after event fired.</li>");
-    }
-    });
-});
 export default {
   name: 'HomePage',
   data(){
@@ -287,6 +270,9 @@ export default {
   components: {
 		buttom
 		},
+	mounted() {
+		this.slides()
+	},
   created() {
     // <img src="http://47.102.116.29:5050/image/head/head001.jpg">
     this.axios.get('http://47.102.116.29/api/Images')
@@ -299,7 +285,22 @@ export default {
   },
   methods:{
 	  slides(){
-		  
+		$(function () {
+			// Slideshow 4
+			$("#slider4").responsiveSlides({
+			auto: true,
+			pager:true,
+			nav:true,
+			speed: 500,
+			namespace: "callbacks",
+			before: function () {
+				$('.events').append("<li>before event fired.</li>");
+			},
+			after: function () {
+				$('.events').append("<li>after event fired.</li>");
+			}
+			});
+		});
 	  }
   }
 };
