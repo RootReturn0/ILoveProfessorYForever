@@ -260,7 +260,7 @@
 import buttom from '@/components/Buttom'
 
 $(function () {
-    // Slideshow 4
+	// Slideshow 4
     $("#slider4").responsiveSlides({
     auto: true,
     pager:true,
@@ -297,5 +297,10 @@ export default {
             console.log(this.loll)
           })
   },
+  methods:{
+	  slides(){
+		  
+	  }
+  }
 };
 </script>
