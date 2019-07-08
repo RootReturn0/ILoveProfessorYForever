@@ -5,11 +5,15 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import api from './api'
+Vue.prototype.api=api
 
 import '../static/css/bootstrap.css'
 import '../static/css/font-awesome.css'
 import '../static/css/lightbox.css'
 import '../static/css/style.css'
+import '../static/css/zerogrid.css'
+
 
 import $ from 'jquery'
 
@@ -20,6 +24,9 @@ import '../static/js/move-top.js'
 import '../static/js/responsiveslides.min.js'
 import '../static/js/SmoothScroll.min.js'
 import '../static/js/lightbox-plus-jquery.min.js'
+
+// import '../static/js/demo.js'
+import '../static/js/classie.js'
 
 Vue.use(VueAxios,axios);
 

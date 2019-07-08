@@ -33,6 +33,7 @@
 											<li><a class="hvr-bounce-to-bottom" href="typography.html">Typography</a></li>          
 										</ul>
 									</li>								 -->
+									<li><router-link to="/Adoptation">Adoptation</router-link></li>
 									<li><router-link to="/Gallery">Gallery</router-link></li>
 									<li><router-link to="/Blog">Blog</router-link></li>
 									<li><router-link to="/Contact">Contact</router-link></li>

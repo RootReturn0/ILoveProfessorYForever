@@ -5,6 +5,7 @@ import HomePage from '@/components/HomePage'
 import About from '@/components/About'
 import Blog from '@/components/Blog'
 import Contact from '@/components/Contact'
+import Adoptation from '@/components/Adoptation'
 
 
 Vue.use(Router)
@@ -17,14 +18,19 @@ export default new Router({
       component: HomePage
     },
     {
-      path: '/Gallery',
-      name: 'Gallery',
-      component: Gallery
-    },
-    {
       path: '/About',
       name: 'About',
       component: About
+    },
+    {
+      path: '/Adoptation',
+      name: 'Adoptation',
+      component: Adoptation
+    },
+    {
+      path: '/Gallery',
+      name: 'Gallery',
+      component: Gallery
     },
     {
       path: '/Blog',

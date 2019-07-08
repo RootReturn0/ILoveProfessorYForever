@@ -15,7 +15,7 @@
 		<!-- container -->
 		<div class="container">
 			<div class="map">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d158858.18237072596!2d-0.10159865000003898!3d51.52864165000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1436514341845" allowfullscreen></iframe>
+				<iframe src="https://map.baidu.com/search/%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E5%98%89%E5%AE%9A%E6%A0%A1%E5%8C%BA%E5%90%8C%E5%BE%B7%E6%A5%BC4%E6%A5%BC/@13494180.424999999,3648071.3,19z?querytype=s&da_src=shareurl&wd=%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E5%98%89%E5%AE%9A%E6%A0%A1%E5%8C%BA%E5%90%8C%E5%BE%B7%E6%A5%BC4%E6%A5%BC&c=289&src=0&pn=0&sug=0&l=12&b=(13470397.47256783,3631200.73791701;13535314.473905109,3666003.46363394)&from=webmap&biz_forward=%7B%22scaler%22:2,%22styles%22:%22pl%22%7D&device_ratio=2" allowfullscreen></iframe>
 			</div>
 			<div class="mail-grids">
 				<div class="col-md-6 mail-grid-left">

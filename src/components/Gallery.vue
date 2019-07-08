@@ -187,7 +187,6 @@ import buttom from '@/components/Buttom'
 export default {
   name: 'Gallary',
   data(){
-    console.log(this.loll)
     return{
       lol: ''
     }
@@ -203,7 +202,7 @@ export default {
             console.log("2231")
             console.log(response.data[0].imageUrl)
             this.lol='http://47.102.116.29:5050/'+response.data[0].imageUrl
-            console.log(this.loll)
+            console.log(this.lol)
           })
   },
 }
