@@ -6,6 +6,7 @@ const apiAddress = 'http://47.102.116.29/api/'
 const baseAddress = 'http://47.102.116.29:5050/'
 
 export default {
+    baseAddress,
     getAllActivity: async function () {
         try {
             var result = await axios.get(apiAddress + 'Activities')
@@ -44,6 +45,15 @@ export default {
     getCat: async function () {
         try {
             var result = await axios.get(apiAddress + 'Cats')
+            return result.data
+        } catch (err) {
+            console.log(err)
+            return []
+        }
+    },
+    getPostcard: async function () {
+        try {
+            var result = await axios.get(apiAddress + 'Postcards')
             return result.data
         } catch (err) {
             console.log(err)
