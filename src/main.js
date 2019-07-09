@@ -13,6 +13,7 @@ import '../static/css/font-awesome.css'
 import '../static/css/lightbox.css'
 import '../static/css/style.css'
 import '../static/css/zerogrid.css'
+import 'animate.css'
 
 
 import $ from 'jquery'

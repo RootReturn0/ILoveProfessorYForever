@@ -1,142 +1,148 @@
 <template>
-    <div>
-        <!-- banner -->
-	<div class="banner about-banner">
-		<banner></banner>
-		<div class="about-heading">	
-			<div class="container">
-				<h2>Adopt A Cat</h2>
-			</div>
-		</div>
-	</div>
-	<!-- //banner -->
-    <!--////////////////////////////////////Container-->
-<section id="container" class="index-page">
-	<div class="wrap-container zerogrid">
-        <!-----------------content-box-2-------------------->
-		<section class="content-box box-2">
-			<div class="zerogrid">
-				<div class="row wrap-box"><!--Start Box-->
-					<div class="header">
-						<h2>Welcome</h2>
-						<hr class="line">
-						<span>text text text text text</span>
-					</div>
-					<div class="row">
-						<div class="col-1-3">
-							<div class="wrap-col">
-								<div class="box-item">
-									<span class="ribbon">Menu Card<b></b></span>
-									<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="">
-									<p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p>
-									<a href="#" class="button button-1">Detail</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-1-3">
-							<div class="wrap-col">
-								<div class="box-item">
-									<span class="ribbon">Fast Food<b></b></span>
-									<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="">
-									<p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p>
-									<a href="#" class="button button-1">Detail</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-1-3">
-							<div class="wrap-col">
-								<div class="box-item">
-									<span class="ribbon">Reservation<b></b></span>
-									<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="">
-									<p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p>
-									<a href="#" class="button button-1">Detail</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-1-3">
-							<div class="wrap-col">
-								<div class="box-item">
-									<span class="ribbon">Chef<b></b></span>
-									<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="">
-									<p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p>
-									<a href="#" class="button button-1">Detail</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-1-3">
-							<div class="wrap-col">
-								<div class="box-item">
-									<span class="ribbon">Preview<b></b></span>
-									<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="">
-									<p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p>
-									<a href="#" class="button button-1">Detail</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-1-3">
-							<div class="wrap-col">
-								<div class="box-item">
-									<span class="ribbon">Text Heading<b></b></span>
-									<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="">
-									<p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p>
-									<a href="#" class="button button-1">Detail</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+<div>
+    <!-- banner -->
+    <div class="banner about-banner">
+        <banner></banner>
+        <div class="about-heading">
+            <div class="container">
+                <h2>Adopt A Cat</h2>
+            </div>
+        </div>
     </div>
-		</section>
+    <!-- //banner -->
+    <!--////////////////////////////////////Container-->
+    <section id="container" class="index-page">
+        <div class="wrap-container zerogrid">
+            <!-----------------content-box-2-------------------->
+            <section class="content-box box-2">
+                <div class="zerogrid">
 
-        <buttom></buttom>
-	</div>
+                    <div class="row wrap-box">
+                        <!--Start Box-->
+                        <ul class="main-submenu">
+                            <li v-for="color in colors" :key="color"><a href="javascript:void(0);" v-text="color.colorName" v-on:click="show(color.colorId)"></a></li>
+                        </ul>
+                        <!-- <div class="header">
+
+<h2>Welcome</h2>
+
+<hr class="line">
+
+<span>text text text text text</span>
+
+</div> -->
+
+                        <div class="row">
+
+                            <div class="col-md-4 agileits-left" v-for="cat in showCats" :key="cat">
+                                <div class="wrap-col">
+                                    <div class="box-item">
+                                        <span class="ribbon" v-text="cat.catName">Menu Card<b></b></span>
+                                        <div class="animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                                            <div class=" hover-fold">
+                                                <div class="top">
+                                                    <div class="front face" :style="{backgroundImage: 'url(' + cat.headPortrait + ')'}"></div>
+                                                    <div class="back face">
+                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
+                                                    </div>
+                                                </div>
+                                                <div class="bottom" :style="{backgroundImage: 'url(' + cat.headPortrait + ')' }"></div>
+                                            </div>
+                                        </div>
+										<div class="clearfix"> </div>
+                                        <!-- <img :src="cat.headPortrait" alt=""> -->
+                                        <p>性别：</p>
+                                        <p v-text="cat.catGender"></p>
+                                        <!-- <p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p> -->
+                                        <div><a href="javascript:void(0);" class="button button-1" v-on:click="adopt()">Adopt</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <buttom></buttom>
+</div>
 </template>
 
 <script>
 $(function () {
-	  // Slideshow 4
-	  $("#slider4").responsiveSlides({
-		auto: true,
-		pager: false,
-		nav: false,
-		speed: 500,
-		namespace: "callbacks",
-		before: function () {
-		  $('.events').append("<li>before event fired.</li>");
-		},
-		after: function () {
-		  $('.events').append("<li>after event fired.</li>");
-		}
-	  });
-	});
+    // Slideshow 4
+    $("#slider4").responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: false,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+            $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+            $('.events').append("<li>after event fired.</li>");
+        }
+    });
+});
 import buttom from '@/components/Buttom'
 import banner from '@/components/Banner'
+import {
+    WOW
+} from 'wowjs'
 
 export default {
-  name: 'Adopt',
-  data(){
-    console.log(this.loll)
-    return{
-      lol: this.loll
-    }
-  },
-  components: {
-		buttom,
-		banner
-		},
-  created() {
-    // <img src="http://47.102.116.29:5050/image/head/head001.jpg">
-    this.axios.get('http://47.102.116.29/api/Images')
-          .then((response) => {
-            console.log("2231")
-            console.log(response.data[0].imageUrl)
-            this.loll='http://47.102.116.29:5050/'+response.data[0].imageUrl
-            console.log(this.loll)
-          })
-  },
+    name: 'Adopt',
+    data() {
+        return {
+            colors: [],
+            cats: [],
+            showCats: []
+        }
+    },
+    components: {
+        buttom,
+        banner
+    },
+    methods: {
+        async init() {
+            this.colors = await this.api.getColor()
+            this.colors.unshift({
+                colorId: 'All',
+                colorName: '全部毛色'
+            })
+            this.cats = await this.api.getCat()
+            this.showCats = this.cats
+            for (var i = 0; i < this.cats.length; i++) {
+                this.cats[i].headPortrait = await this.api.getImage(this.cats[i].headPortrait)
+            }
+            //   for(var i=0;i<catList.length;i++){
+            // 	  this.cats.push({id: catList.catId, name: catList.catName, color: catList.catColor, image: catList.headPortrait, isAdopt: catList.isAdopt})
+            //   }
+            console.log(this.cats)
+        },
+        show(color) {
+            console.log(color)
+            if (color == 'All') {
+                this.showCats = this.cats
+                return
+            }
+            this.showCats = []
+            for (var i = 0; i < this.cats.length; i++) {
+                if (this.cats[i].catColor == color)
+                    this.showCats.push(this.cats[i])
+            }
+        },
+        adopt() {
+            this.$router.push({
+                path: '/Form'
+            })
+        }
+    },
+    mounted() {
+        new WOW().init();
+        this.init()
+    },
 };
 </script>

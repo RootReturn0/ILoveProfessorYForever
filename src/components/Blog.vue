@@ -21,7 +21,7 @@
                             <div class="blog-left-left">
                                 <p>发布者 <span v-text="blog.name" style="color:red;"></span> &nbsp;&nbsp;<span v-text="blog.time"></span></p>
                                 <!-- <p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on June 2, 2015 &nbsp;&nbsp; <a href="#">Comments (10)</a></p> -->
-                                <a href="single.html"><img :src="blog.cover" alt="暂无图片" /></a>
+                                <a href="javascript:void(0);"><img :src="blog.cover" alt="暂无图片" /></a>
                             </div>
                             <div class="blog-left-right">
                                 <a><p v-text="blog.title"></p></a>
@@ -51,27 +51,6 @@
                     </nav>
                 </div>
                 <div class="col-md-4 blog-top-right-grid">
-                    <!-- <div class="Categories">
-
-<h3>Categories</h3>
-
-<ul>
-
-<li><a href="#">Phasellus sem leo, interdum quis risus</a></li>
-
-<li><a href="#">Nullam egestas nisi id malesuada aliquet </a></li>
-
-<li><a href="#"> Donec condimentum purus urna venenatis</a></li>
-
-<li><a href="#">Ut congue, nisl id tincidunt lobor mollis</a></li>
-
-<li><a href="#">Cum sociis natoque penatibus et magnis</a></li>
-
-<li><a href="#">Suspendisse nec magna id ex pretium</a></li>
-
-</ul>
-
-</div> -->
                     <div class="Categories">
                         <h3>Archive</h3>
                         <ul class="marked-list offs1">
@@ -87,7 +66,7 @@
 </div>
                                 <div class="col-md-9 comments-right">
                                     <h5>Admin</h5>
-                                    <a href="#">Phasellus sem leointerdum risus</a>
+                                    <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
                                     <p>March 16,2014 6:09:pm</p>
                                 </div>
                                 <div class="clearfix"> </div>
@@ -99,7 +78,7 @@
 </div>
                                     <div class="col-md-9 comments-right">
                                         <h5>Admin</h5>
-                                        <a href="#">Phasellus sem leointerdum risus</a>
+                                        <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
                                         <p>March 16,2014 6:09:pm</p>
                                     </div>
                                     <div class="clearfix"> </div>
@@ -111,7 +90,7 @@
 </div>
                                         <div class="col-md-9 comments-right">
                                             <h5>Admin</h5>
-                                            <a href="#">Phasellus sem leointerdum risus</a>
+                                            <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
                                             <p>March 16,2014 6:09:pm</p>
                                         </div>
                                         <div class="clearfix"> </div>
@@ -149,11 +128,12 @@ export default {
     },
     methods: {
         async init() {
-            var response = await this.api.getActivities()
-            //   .then((response) => {
+            var activities = await this.api.getAllActivity()
+            console.log(activities)
+            //   .then((activities) => {
             this.blogsShow = []
             this.sites = []
-            if (response.data == []) {
+            if (activities == []) {
                 this.blogsShow.push({
                     title: '暂无内容'
                 })
@@ -162,31 +142,39 @@ export default {
                 })
                 return
             }
-            for (var i = 0; i < response.data.length; i++) {
+
+            var num = 0
+            for (var i = 0; i < activities.length; i++) {
                 this.blogs.push({
-                    name: response.data[i].adminId,
-                    time: response.data[i].actTime.slice(0, 10),
-                    title: response.data[i].activityTitle,
-                    text: response.data[i].activityDescription,
-                    cover: await this.api.getImage(response.data[i].activityCover)
+                    name: activities[i].adminId,
+                    time: activities[i].actTime.slice(0, 10),
+                    title: activities[i].activityTitle,
+                    text: activities[i].activityDescription,
+                    cover: await this.api.getImage(activities[i].activityCover)
                 })
                 // console.log(imageUrl)
                 var flag = true
                 for (var j = 0; j < this.sites.length; j++) {
-                    if (response.data[i].actTime.slice(0, 7) == this.sites[j].name) {
+                    if (activities[i].actTime.slice(0, 7) == this.sites[j].name) {
                         this.sites[j].num++
+                        num++
                         flag = false
                         break
                     }
                 }
                 if (flag) {
                     this.sites.push({
-                        name: response.data[i].actTime.slice(0, 7),
+                        name: activities[i].actTime.slice(0, 7),
                         num: 1
                     })
+                    num++
                 }
                 console.log('?!', this.sites.length, i)
             }
+            this.sites.unshift({
+                name: '全部',
+                num: num
+            })
 
             this.blogsShow = this.blogs
             this.blogNum = this.blogsShow.length
@@ -224,6 +212,11 @@ export default {
             this.blogLowIndex = target - 2
         },
         changeArchive(time) {
+            if (time == '全部') {
+				this.blogsShow = this.blogs
+				this.blogNum = this.blogsShow.length
+				return
+            }
             this.blogsShow = []
             for (var i = 0; i < this.blogs.length; i++) {
                 if (this.blogs[i].time.slice(0, 7) == time)

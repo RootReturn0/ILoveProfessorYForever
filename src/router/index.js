@@ -6,6 +6,8 @@ import About from '@/components/About'
 import Blog from '@/components/Blog'
 import Contact from '@/components/Contact'
 import Adoptation from '@/components/Adoptation'
+import Form from '@/components/Form'
+import Single from '@/components/Single'
 
 
 Vue.use(Router)
@@ -41,6 +43,16 @@ export default new Router({
       path: '/Contact',
       name: 'Contact',
       component: Contact
+    },
+    {
+      path: '/Form',
+      name: 'Form',
+      component: Form
+    },
+    {
+      path: '/Single',
+      name: 'Single',
+      component: Single
     },
   ]
 })

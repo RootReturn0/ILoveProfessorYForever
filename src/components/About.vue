@@ -179,14 +179,6 @@ export default {
 		banner
 		},
   created() {
-    // <img src="http://47.102.116.29:5050/image/head/head001.jpg">
-    this.axios.get('http://47.102.116.29/api/Images')
-          .then((response) => {
-            console.log("2231")
-            console.log(response.data[0].imageUrl)
-            this.loll='http://47.102.116.29:5050/'+response.data[0].imageUrl
-            console.log(this.loll)
-          })
   },
 };
 </script>
