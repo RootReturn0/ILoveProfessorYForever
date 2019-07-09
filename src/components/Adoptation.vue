@@ -40,20 +40,19 @@
                                         <span class="ribbon" v-text="cat.catName">Menu Card<b></b></span>
                                         <div class="animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
                                             <div class=" hover-fold">
+												<h4><span v-text="cat.age"></span>&nbsp;岁</h4>															
                                                 <div class="top">
                                                     <div class="front face" :style="{backgroundImage: 'url(' + cat.headPortrait + ')'}"></div>
                                                     <div class="back face">
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
+														<div><p>性别：<span v-text="cat.catGender"></span></p></div>
+                                                        <div><p>毛色：<span v-text="cat.catColor"></span></p></div>
+														<div><p>是否绝育：<span v-if="cat.isSterilization">是</span><span v-else>否</span></p></div>
                                                     </div>
                                                 </div>
                                                 <div class="bottom" :style="{backgroundImage: 'url(' + cat.headPortrait + ')' }"></div>
                                             </div>
                                         </div>
 										<div class="clearfix"> </div>
-                                        <!-- <img :src="cat.headPortrait" alt=""> -->
-                                        <p>性别：</p>
-                                        <p v-text="cat.catGender"></p>
-                                        <!-- <p>The sliding menucard will surely impress your customers! Set up several pages and display them side by side, just as on a paper menucard!</p> -->
                                         <div><a href="javascript:void(0);" class="button button-1" v-on:click="adopt()">Adopt</a></div>
                                     </div>
                                 </div>
