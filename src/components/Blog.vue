@@ -215,6 +215,8 @@ export default {
             if (time == '全部') {
 				this.blogsShow = this.blogs
 				this.blogNum = this.blogsShow.length
+			this.changePage(1)
+			document.documentElement.scrollTop = document.body.scrollTop = 310;
 				return
             }
             this.blogsShow = []
@@ -223,7 +225,9 @@ export default {
                     this.blogsShow.push(this.blogs[i])
                 console.log('1234567')
             }
-            this.blogNum = this.blogsShow.length
+			this.blogNum = this.blogsShow.length
+			this.changePage(1)
+			document.documentElement.scrollTop = document.body.scrollTop = 310;
         }
     },
     mounted() {

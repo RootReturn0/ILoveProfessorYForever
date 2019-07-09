@@ -19,15 +19,15 @@
              <div class="form-mid-w3ls"> 
                  <div class="form-group">
                     <div class="form-mid-w3ls">
-                       <p>&nbsp</p>
-                       <p>&nbsp • 领养人应有固定住所,不支持学生宿舍养猫</p>
+                       <p>&nbsp;</p>
+                       <p>&nbsp; • 领养人应有固定住所,不支持学生宿舍养猫</p>
                     </div>
                     <div class="form-mid-w3ls">
-                       <p>&nbsp</p>
+                       <p>&nbsp;</p>
                        <p>• 须全部家庭成员同意,无过敏等不可抗因素</p>
                     </div>
                     <div class="form-mid-w3ls">
-                       <p>&nbsp</p>
+                       <p>&nbsp;</p>
                        <p>• 科学喂养不散养,家中有纱窗纱门以防走失</p>
                     </div>
                  </div>
@@ -36,7 +36,7 @@
             <div class="form-mid-w3ls"> 
                  <div class="form-group">
                     <div class="form-mid-w3ls">
-                       <p>&nbsp • 按时免疫驱虫,及时绝育</p>
+                       <p>&nbsp; • 按时免疫驱虫,及时绝育</p>
                     </div>
                     <div class="form-mid-w3ls">
                        <p>• 对猫咪终身负责,出现特殊情况请与猫盟联系</p>
@@ -50,7 +50,7 @@
             <div class="form-mid-w3ls"> 
                  <div class="form-group">
                     <div class="form-mid-w3ls">
-                       <p>&nbsp • 领养后经常发布猫咪视频和照片至qq群</p>
+                       <p>&nbsp; • 领养后经常发布猫咪视频和照片至qq群</p>
                     </div>
                     <div class="form-mid-w3ls">
                        <p>• 不因生育、搬家等原因抛弃或随意送养猫咪</p>
@@ -168,7 +168,7 @@
             <!-- <div class="custom-file form-left-choose">
                <input type="file"  class="custom-file-input" id="customFile">
             </div> -->
-             <p>&nbsp • 咨询猫咪领养相关事宜请加入qq群：631435029</p>
+             <p>&nbsp; • 咨询猫咪领养相关事宜请加入qq群：631435029</p>
 
 
 

@@ -7,6 +7,7 @@ const baseAddress = 'http://47.102.116.29:5050/'
 
 export default {
     baseAddress,
+
     getAllActivity: async function () {
         try {
             var result = await axios.get(apiAddress + 'Activities')
@@ -16,6 +17,7 @@ export default {
             return []
         }
     },
+
     getAllImage: async function () {
         try {
             var result = await axios.get(apiAddress + 'Images')
@@ -25,6 +27,7 @@ export default {
             return []
         }
     },
+
     getImage: async function (id) {
         try {
             var result = await axios.get(apiAddress + 'Images/' + id)
@@ -33,6 +36,7 @@ export default {
             console.log(err)
         }
     },
+
     getColor: async function () {
         try {
             var result = await axios.get(apiAddress + 'CatColors')
@@ -42,6 +46,7 @@ export default {
             return []
         }
     },
+
     getCat: async function () {
         try {
             var result = await axios.get(apiAddress + 'Cats')
@@ -51,6 +56,7 @@ export default {
             return []
         }
     },
+    
     getPostcard: async function () {
         try {
             var result = await axios.get(apiAddress + 'Postcards')

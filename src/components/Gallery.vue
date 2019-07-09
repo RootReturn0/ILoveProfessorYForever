@@ -18,7 +18,7 @@
               <figure class="effect-apollo">
                 <a
                   class="example-image-link"
-                  href="http://47.102.116.29:5050/image/head/head001.jpg"
+                  :href="postcard.headImageUrl"
                   data-lightbox="example-set"
                   data-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sem ac lectus mattis sagittis. Donec pulvinar quam sit amet est vestibulum volutpat. Phasellus sed nibh odio. Phasellus posuere at purus sit amet porttitor. Cras euismod egestas enim eget molestie. Aenean ornare condimentum odio, in lacinia felis finibus non. Nam faucibus libero et lectus finibus, sed porttitor velit pellentesque."
                 >
