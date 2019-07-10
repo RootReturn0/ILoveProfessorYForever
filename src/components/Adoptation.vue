@@ -54,15 +54,12 @@
 										</a> 
 										<a v-for="image in cat.images" :key="image" :href="cat.headImageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate" style="display:none"></a>
 										<div class="clearfix"> </div>
-										<el-upload
-  list-type="picture-card"
-  action="''"
-  :http-request="upload"
-  :before-upload="beforeAvatarUpload">
-  <i class="el-icon-plus"></i>
- </el-upload>
-                                        <div>&nbsp;&nbsp;<a v-if="cat.isSterilization" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt()">Adopt</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" class="button" v-on:click="adopt()">上传图片</a></div>
-                                    </div>
+                                        <div style="display:inline"><a v-if="cat.isSterilization" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt()">领&nbsp;&nbsp;养</a>
+										<a class="button">上传图片<input ref="file" name="file" v-on:change="upload(cat.catId)" type="file" id="file" accept="image/*" capture="camera"></a>
+										</div>
+
+            
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -151,8 +148,10 @@ export default {
                     this.showCats.push(this.cats[i])
             }
 		},
-		upload() {
-
+		upload(id) {
+			var file=document.getElementById('file').files[0]
+			console.log(file)
+			this.api.uploadImage(id,file)
 		},
         adopt() {
             this.$router.push({

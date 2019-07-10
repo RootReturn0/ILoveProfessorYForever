@@ -10,7 +10,7 @@
       
       <!-- multistep form -->
       <div class="main-bothside">
-         <form action="#" method="post">
+         <form v-on:submit.prevent="submit()">
 
              <input type="button" value="×">
              <!-- <input type="button" value="✗"> -->
@@ -67,13 +67,13 @@
             <div class="form-group">
                <div class="form-mid-w3ls">
                   <!-- <input type="text" name="name"  placeholder="Name" required=""> -->
-                   <input type="text" name="姓名"  placeholder="姓名" required="">
+                   <input type="text" v-model="form.userName" name="姓名"  placeholder="姓名" required="">
                </div>
                <div class="form-mid-w3ls">
-                  <input type="email" name="邮箱" placeholder="邮箱" required="">
+                  <input type="email" v-model="form.userEmail" name="邮箱" placeholder="邮箱" required="">
                </div>
                <div class="form-mid-w3ls">
-                  <input type="text" name="联系电话" placeholder="联系电话" required="">
+                  <input type="text" v-model="form.userPhone" name="联系电话" placeholder="联系电话" required="">
                </div>
             </div>
 
@@ -85,7 +85,7 @@
                    <input type="text" name="城市" placeholder="城市" required="">
                </div>
                <div class="form-mid-w3ls">
-                   <input type="text" name="详细地址" placeholder="详细地址" required="">
+                   <input type="text" v-model="form.userAddress" name="详细地址" placeholder="详细地址" required="">
                   <!-- <input type="text" name="State" placeholder="State" required=""> -->
                </div>
             </div>
@@ -93,13 +93,13 @@
                <div class="personal-info">
                   <p>性别</p>
                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="select4" value="option1" checked="">
+                     <input class="form-check-input" v-model="form.userGender" type="radio" name="select4" value="男" checked="">
                      <label class="form-check-label">
                      男
                      </label>
                   </div>
                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="select4" value="option2" checked="">
+                     <input class="form-check-input" v-model="form.userGender" type="radio" name="select4" value="女" checked="">
                      <label class="form-check-label">
                      女
                      </label>
@@ -108,13 +108,13 @@
                <div class="personal-info">
                   <p>有无固定住所</p>
                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="select5" value="option3" checked="">
+                     <input class="form-check-input" v-model="form.auditStatus" type="radio" name="select5" value="有" checked="">
                      <label class="form-check-label">
                      有
                      </label>
                   </div>
                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="select5" value="option4" checked="">
+                     <input class="form-check-input" v-model="form.auditStatus" type="radio" name="select5" value="无" checked="">
                      <label class="form-check-label">
                      无
                      </label>
@@ -129,24 +129,24 @@
                <div class="personal-info">
                   <p>家庭成员有无宠物过敏</p>
                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="select6" value="option6" checked="">
+                     <input class="form-check-input" v-model="form.attachment" type="radio" name="select6" value="有" checked="">
                      <label class="form-check-label">
                      有
                      </label>
                   </div>
                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="select6" value="option7" checked="">
+                     <input class="form-check-input" v-model="form.attachment" type="radio" name="select6" value="无" checked="">
                      <label class="form-check-label">
                      无
                      </label>
                      <div class="clear"></div>
                   </div>
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                      <input class="form-check-input" type="radio" name="select6" value="option8" checked="">
                      <label class="form-check-label">
                      未知
                      </label>
-                  </div>
+                  </div> -->
                </div>
             </div>
             <!-- <div class="form-group">
@@ -209,37 +209,32 @@ export default {
     // }
     return {
         form: {
-            name: '',
-            email: '',
-            phone: '',
-            province: '',
-            city: '',
-            address: '',
-            gentle: '',
-            fixAdd: '',
-            otherPet: '',
-            description:''
+            // applicationID: 'id',
+            userAccount: '150939023@qq.com',
+            carID: 'ca1',
+            // applicationTime:'',
+            reason:'',
+            attachment:'',
+            auditStatus:'',
+            userName:'',
+            userPhone:'',
+            userEmail:'',
+            userAddress:'',
+            userGender:''
             }
         }
     },
     methods: {
-        
+        async submit () {
+         //   var formData = JSON.stringify(this.form)
+           this.api.uploadAdopt(this.form)
+        }
     },
 
   components: {
 		buttom,
 		banner
 		},
-  created() {
-    // <img src="http://47.102.116.29:5050/image/head/head001.jpg">
-    this.axios.get('http://47.102.116.29/api/Images')
-          .then((response) => {
-            console.log("2231")
-            console.log(response.data[0].imageUrl)
-            this.loll='http://47.102.116.29:5050/'+response.data[0].imageUrl
-            console.log(this.loll)
-          })
-  },
 };
 </script>
 
