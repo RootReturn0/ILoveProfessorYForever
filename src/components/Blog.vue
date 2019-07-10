@@ -48,6 +48,12 @@
 </a>
                             </li>
                         </ul>
+						<ul class="pagination">
+														<li>                                <a><p style="display:inline">前往&nbsp;<input type="text" v-model="targetPage" style="height: 20px; width:20px;border-bottom:#666 1px solid; border-left-width:0px; border-right-width:0px; border-top-width:0px">&nbsp;页</p></a> 
+</li>
+<li><a href="javascript:void(0);" v-on:click="changePage(targetPage)">Go</a></li>
+
+						</ul>
                     </nav>
                 </div>
                 <div class="col-md-4 blog-top-right-grid">
@@ -67,7 +73,7 @@
                                 <div class="col-md-9 comments-right">
                                     <h5>Admin</h5>
                                     <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
-                                    <p>March 16,2014 6:09:pm</p>
+                                    <p style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">March 16,2014 6:09:pm</p>
                                 </div>
                                 <div class="clearfix"> </div>
                             </div>
@@ -110,6 +116,7 @@
 <script>
 import buttom from '@/components/Buttom'
 import banner from '@/components/Banner'
+
 export default {
     name: 'Blog',
     data() {
@@ -119,7 +126,8 @@ export default {
             blogNum: 0,
             blogsShow: [],
             blogs: [],
-            sites: []
+			sites: [],
+			targetPage: ''
         }
     },
     components: {
@@ -206,6 +214,9 @@ export default {
 			this.blogLowIndex += 2
         },
         changePage(curPage) {
+			this.targetPage=''
+			if(curPage<1||curPage>Math.ceil(this.blogNum/2))
+				return
 			document.documentElement.scrollTop = document.body.scrollTop = 310;
             var target = curPage * 2
             if (this.blogNum < target || this.blogNum < 2)

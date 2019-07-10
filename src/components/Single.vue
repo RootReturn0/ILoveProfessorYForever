@@ -18,7 +18,11 @@
 					<div class="left-blog left-single">
 						<div class="blog-left">
 							<div class="single-left-left">
-								<p>发布者 <span v-text="blog1" style="color:red;"></span> &nbsp;&nbsp;<span v-text="blog1Time"></span></p>
+								<p>
+									发布者 <span v-text="blog1" style="color:red;"></span> &nbsp;&nbsp;
+									<span v-text="blog1Time"></span>
+									<el-button v-on:click="backHistory" style="text-align: left;color:red;">返回</el-button>
+								</p>
 								<!-- <p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on June 2, 2015 &nbsp;&nbsp; <a href="#">Comments (10)</a></p> -->
 								<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
 							</div>
@@ -45,14 +49,45 @@
 				<div class="col-md-4 blog-top-right-grid">
 					<div class="Categories">
 						<h3>按类型分</h3>
-						<ul>
-							<li><a href="#">Phasellus sem leo, interdum quis risus</a></li>
-							<li><a href="#">Nullam egestas nisi id malesuada aliquet </a></li>
-							<li><a href="#"> Donec condimentum purus urna venenatis</a></li>
-							<li><a href="#">Ut congue, nisl id tincidunt lobor mollis</a></li>
-							<li><a href="#">Cum sociis natoque penatibus et magnis</a></li>
-							<li><a href="#">Suspendisse nec magna id ex pretium</a></li>
+						<ul class="marked-list offs1">
+							<li v-for="site in sites" :key="site"> <a href="#">{{site.name}}</a></li>                        
 						</ul>
+					</div>
+					<div class="comments">
+						<h3>最近发布</h3>
+						<div class="comments-text">
+							<div class="col-md-3 comments-left">
+								<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
+							</div>
+							<div class="col-md-9 comments-right">
+								<h5>社长猫</h5>
+								<a href="#">2019/04/02猫屋制作实况</a> 
+								<p>2019年4月3日 11:08</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="comments-text">
+							<div class="col-md-3 comments-left">
+								<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
+							</div>
+							<div class="col-md-9 comments-right">
+								<h5>成员猫</h5>
+								<a href="#">2019/03/13捉猫绝育日常</a> 
+								<p>2019年3月14日 10:10</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="comments-text">
+							<div class="col-md-3 comments-left">
+								<img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
+							</div>
+							<div class="col-md-9 comments-right">
+								<h5>成员猫</h5>
+								<a href="#">2019/03/03猫咖小聚</a> 
+								<p>2019年3月5日 09:11</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -70,9 +105,40 @@ import banner from '@/components/Banner'
 
   export default {
 	name: 'Single',
-	components: {
+  data(){
+    console.log(this.loll)
+    return{
+	  lol: this.loll,
+	  blog1: 'Posted By ??? on June 2, 2015',
+	  blog1Time: '1999-02-29',
+	  sites:[{name:'???'},
+	  {name:'!!!'}]
+    }
+  },
+  components: {
 		buttom,
 		banner
 		},
-	}
+   methods:{
+	  getArchive(){
+		  this.axios.get('http://47.102.116.29/api/Activities/')
+          .then((response) => {
+			this.sites.push({name: response.data[0].actTime.slice(0,7)})
+          })
+	  },
+      backHistory(){
+        this.$router.go(-1);//返回上一层
+      },
+    },
+  created() {
+    // <img src="http://47.102.116.29:5050/image/head/head001.jpg">
+    this.axios.get('http://47.102.116.29/api/Images')
+          .then((response) => {
+            console.log("2231")
+            console.log(response.data[0].imageUrl)
+            this.loll='http://47.102.116.29:5050/'+response.data[0].imageUrl
+            console.log(this.loll)
+          })
+  },
+};
 </script>

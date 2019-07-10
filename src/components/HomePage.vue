@@ -224,7 +224,7 @@
                         <a href="single.html"><span v-if="blog2.activityTitle">{{blog2.activityTitle}}</span><span v-else>暂无标题</span></a>
                         <h5 v-if="blog2.actTime"><span v-text="blog2.actTime.slice(0,4)"></span>年&nbsp;<span v-text="blog2.actTime.slice(5,7)"></span>月<span v-text="blog2.actTime.slice(8,10)"></span>日</h5>
                         <h5 v-else>暂无时间</h5>
-                        <p><span v-if="blog2.activityDescription">{{blog2.activityDescription}}</span><span v-else>暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容</span></p>
+                        <p><span v-if="blog2.activityDescription">{{blog2.activityDescription}}</span><span v-else>暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容</span></p>
                     </div>
                     <div class="news-right-grid">
                         <a href="single.html"><span v-if="blog3.activityTitle">{{blog3.activityTitle}}</span><span v-else>暂无标题</span></a>

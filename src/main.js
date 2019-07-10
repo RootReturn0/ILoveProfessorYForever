@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import api from './api'
+
 Vue.prototype.api=api
 
 import '../static/css/bootstrap.css'
