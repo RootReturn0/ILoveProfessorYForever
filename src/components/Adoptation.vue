@@ -33,27 +33,35 @@
 </div> -->
 
                         <div class="row">
-
                             <div class="col-md-4 agileits-left" v-for="cat in showCats" :key="cat">
                                 <div class="wrap-col">
                                     <div class="box-item">
-                                        <span class="ribbon" v-text="cat.catName">Menu Card<b></b></span>
+                                        <a :href="cat.headImageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate"><span class="ribbon" v-text="cat.catName"></span>
                                         <div class="animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
                                             <div class=" hover-fold">
 												<h4><span v-text="cat.age"></span>&nbsp;岁</h4>															
                                                 <div class="top">
-                                                    <div class="front face" :style="{backgroundImage: 'url(' + cat.headPortrait + ')'}"></div>
+                                                    <div class="front face" :style="{backgroundImage: 'url(' + cat.headImageUrl + ')'}"></div>
                                                     <div class="back face">
 														<div><p>性别：<span v-text="cat.catGender"></span></p></div>
-                                                        <div><p>毛色：<span v-text="cat.catColor"></span></p></div>
+                                                        <div><p>毛色：<span v-text="cat.colorName"></span></p></div>
 														<div><p>是否绝育：<span v-if="cat.isSterilization">是</span><span v-else>否</span></p></div>
                                                     </div>
                                                 </div>
-                                                <div class="bottom" :style="{backgroundImage: 'url(' + cat.headPortrait + ')' }"></div>
+                                                <div class="bottom" :style="{backgroundImage: 'url(' + cat.headImageUrl + ')' }"></div>
                                             </div>
                                         </div>
+										</a> 
+										<a v-for="image in cat.images" :key="image" :href="cat.headImageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate" style="display:none"></a>
 										<div class="clearfix"> </div>
-                                        <div><a href="javascript:void(0);" class="button button-1" v-on:click="adopt()">Adopt</a></div>
+										<el-upload
+  list-type="picture-card"
+  action="''"
+  :http-request="upload"
+  :before-upload="beforeAvatarUpload">
+  <i class="el-icon-plus"></i>
+ </el-upload>
+                                        <div>&nbsp;&nbsp;<a v-if="cat.isSterilization" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt()">Adopt</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" class="button" v-on:click="adopt()">上传图片</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +105,8 @@ export default {
         return {
             colors: [],
             cats: [],
-            showCats: []
+			showCats: [],
+			catImages: []
         }
     },
     components: {
@@ -114,15 +123,24 @@ export default {
             this.cats = await this.api.getCat()
             this.showCats = this.cats
             for (var i = 0; i < this.cats.length; i++) {
-                this.cats[i].headPortrait = await this.api.getImage(this.cats[i].headPortrait)
-            }
+				this.cats[i].headImageUrl = this.api.baseAddress+this.cats[i].headImageUrl
+				this.catImages.push(await this.api.getCatImage(this.cats[i].catId))
+				for (var j = 0; j < this.catImages[i].length; j++) {
+					try {
+					this.catImages[i][j].imageUrl= this.api.baseAddress+this.catImages[i][j].imageUrl
+					} catch (err) {
+						console.log(i, j)
+					}
+				}
+				this.cats[i]['images']=this.catImages[i]
+			}
+			console.log('asdasda',this.catImages)
             //   for(var i=0;i<catList.length;i++){
             // 	  this.cats.push({id: catList.catId, name: catList.catName, color: catList.catColor, image: catList.headPortrait, isAdopt: catList.isAdopt})
             //   }
-            console.log(this.cats)
+            // console.log(this.cats)
         },
         show(color) {
-            console.log(color)
             if (color == 'All') {
                 this.showCats = this.cats
                 return
@@ -132,7 +150,10 @@ export default {
                 if (this.cats[i].catColor == color)
                     this.showCats.push(this.cats[i])
             }
-        },
+		},
+		upload() {
+
+		},
         adopt() {
             this.$router.push({
                 path: '/Form'

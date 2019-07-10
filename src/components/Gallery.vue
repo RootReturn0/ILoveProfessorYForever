@@ -18,17 +18,17 @@
               <figure class="effect-apollo">
                 <a
                   class="example-image-link"
-                  :href="postcard.headImageUrl"
+                  :href="postcard.imageUrl"
                   data-lightbox="example-set"
                   data-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sem ac lectus mattis sagittis. Donec pulvinar quam sit amet est vestibulum volutpat. Phasellus sed nibh odio. Phasellus posuere at purus sit amet porttitor. Cras euismod egestas enim eget molestie. Aenean ornare condimentum odio, in lacinia felis finibus non. Nam faucibus libero et lectus finibus, sed porttitor velit pellentesque."
                 >
-                  <img :src="postcard.headImageUrl" alt>
+                  <img :src="postcard.imageUrl" alt=“”>
                   <figcaption>
                     <p v-text="postcard.remark">Proin vitae luctus dui, sit amet ultricies leo</p>
                   </figcaption>
                 </a>
               </figure>
-              <p v-text="postcard.remark">Proin vitae luctus dui, sit amet ultricies leo</p>
+              <p><span v-if="postcard.producer">{{postcard.producr}}</span><span v-else>未知作者</span>，<span v-if="postcard.produceYear">{{postcard.produceYear}}</span><span v-else>未知年份</span></p>
             </div>
             </div>
           </div>
@@ -63,9 +63,9 @@ export default {
   methods: {
     async init() {
       this.postcards= await this.api.getPostcard()
-      // console.log(this.postcards)
+      console.log(this.postcards)
       for(var i=0;i<this.postcards.length;i++){
-        this.postcards[i].headImageUrl=this.api.baseAddress+this.postcards[i].headImageUrl
+        this.postcards[i].imageUrl=this.api.baseAddress+this.postcards[i].imageUrl
       }
       console.log(this.postcards)
     }

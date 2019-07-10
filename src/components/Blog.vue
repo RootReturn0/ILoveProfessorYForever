@@ -183,6 +183,7 @@ export default {
             //   })
         },
         prePage() {
+			document.documentElement.scrollTop = document.body.scrollTop = 310;
             console.log('pre!')
             console.log(this.blogLowIndex % 2, this.blogHighIndex % 2)
             if (this.blogLowIndex - 2 < 0)
@@ -192,31 +193,33 @@ export default {
                 this.blogHighIndex -= this.blogHighIndex % 2
             else
                 this.blogHighIndex -= 2
-            console.log(this.blogLowIndex, this.blogHighIndex)
+			console.log(this.blogLowIndex, this.blogHighIndex)
         },
         nextPage() {
+			document.documentElement.scrollTop = document.body.scrollTop = 310;
             if (this.blogLowIndex + 2 >= this.blogNum)
                 return
             if (this.blogHighIndex + 2 > this.blogNum)
                 this.blogHighIndex = this.blogNum
             else
                 this.blogHighIndex += 2
-            this.blogLowIndex += 2
+			this.blogLowIndex += 2
         },
         changePage(curPage) {
+			document.documentElement.scrollTop = document.body.scrollTop = 310;
             var target = curPage * 2
             if (this.blogNum < target || this.blogNum < 2)
                 this.blogHighIndex = this.blogNum
             else
                 this.blogHighIndex = target
-            this.blogLowIndex = target - 2
+			this.blogLowIndex = target - 2
         },
         changeArchive(time) {
+			document.documentElement.scrollTop = document.body.scrollTop = 310;
             if (time == '全部') {
 				this.blogsShow = this.blogs
 				this.blogNum = this.blogsShow.length
 			this.changePage(1)
-			document.documentElement.scrollTop = document.body.scrollTop = 310;
 				return
             }
             this.blogsShow = []
@@ -227,7 +230,6 @@ export default {
             }
 			this.blogNum = this.blogsShow.length
 			this.changePage(1)
-			document.documentElement.scrollTop = document.body.scrollTop = 310;
         }
     },
     mounted() {

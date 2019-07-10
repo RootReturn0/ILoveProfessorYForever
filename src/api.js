@@ -49,17 +49,28 @@ export default {
 
     getCat: async function () {
         try {
-            var result = await axios.get(apiAddress + 'Cats')
+            var result = await axios.get(apiAddress + 'Cats/GetCatList')
             return result.data
         } catch (err) {
             console.log(err)
             return []
         }
     },
-    
+
+    getCatImage: async function (id) {
+        try {
+            var result = await axios.get(apiAddress + 'Cats/Image?id='+id)
+            return result.data
+        } catch (err) {
+            console.log(err)
+            return []
+        }
+    },
+
     getPostcard: async function () {
         try {
             var result = await axios.get(apiAddress + 'Postcards')
+            console.log('><><><><><>')
             return result.data
         } catch (err) {
             console.log(err)
