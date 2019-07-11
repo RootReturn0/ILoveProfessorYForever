@@ -245,7 +245,7 @@ body a {
       text-align:center;
   }
   .agileits-banner-info h3{
-      color: rgba(255, 255, 255, 0.57);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 7em;
       margin: 0;
       font-family: 'Raleway', sans-serif;
@@ -1617,7 +1617,7 @@ body a {
   }
   .blog-left-right a:hover{
       text-decoration: none;
-      color: #F44336;
+      color: rgb(141, 117, 115);
   }
   .blog-left-left {
       padding: 0 !important;

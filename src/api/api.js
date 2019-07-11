@@ -59,7 +59,7 @@ export default {
 
     getCatImage: async function (id) {
         try {
-            var result = await axios.get(apiAddress + 'Cats/Image?id='+id)
+            var result = await axios.get(apiAddress + 'Cats/Image?id=' + id)
             return result.data
         } catch (err) {
             console.log(err)
@@ -79,16 +79,16 @@ export default {
     },
 
     uploadImage: function (id, file) {
-        var data=new FormData()
-        
+        var data = new FormData()
+
         data.append('userAccount', '150939023@qq.com')
         data.append('catID', id)
-        data.append('file',file)
+        data.append('file', file)
 
-        axios.post(apiAddress+'Images/uploadApplyToCatImage?'+'catID='+id+'&'+'userAccount='+'150939023@qq.com',data)
-        .then(res=>{
-            console.log('res=>',res);            
-        })
+        axios.post(apiAddress + 'Images/uploadApplyToCatImage?' + 'catID=' + id + '&' + 'userAccount=' + '150939023@qq.com', data)
+            .then(res => {
+                console.log('res=>', res);
+            })
     },
 
     uploadAdopt: function (data) {
@@ -102,9 +102,27 @@ export default {
         // }).then(res=>{
         //     console.log('res=>',res);   
         // })
-        axios.post(apiAddress+'ApplyToAdopts',data)
-        .then(res=>{
-            console.log('res=>',res);            
-        })
+        axios.post(apiAddress + 'ApplyToAdopts', data)
+            .then(res => {
+                console.log('res=>', res);
+            })
+    },
+
+    getUserInfo: async function (account) {
+        var info = await axios.get('http://47.102.116.29/api/Users/' + account)
+        sessionStorage.setItem("UserUrl", info.data.headImageUrl);
+        sessionStorage.setItem("nickname", info.data.nickname);
+        sessionStorage.setItem("introduction", info.data.introduction);
+       
+        return info.data
+    },
+    getUserName: async function (account) {
+        var info = await axios.get('http://47.102.116.29/api/Users/' + account)
+       console.log(info.data.nickname)
+        return info.data.nickname
+    },
+    getUserIntro: async function (account) {
+        var info = await axios.get('http://47.102.116.29/api/Users/' + account)
+        return info.data.introduction
     }
 }

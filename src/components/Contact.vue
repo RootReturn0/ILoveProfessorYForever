@@ -19,28 +19,26 @@
             </div>
             <div class="mail-grids">
                 <div class="col-md-6 mail-grid-left">
-                    <h3>Address</h3>
-                    <h5>Cras porttitor imperdiet volutpat nulla malesuada lectus eros <span>ut convallis felis consectetur ut </span></h5>
-                    <h4>Headquarters</h4>
-                    <p>123 T. Globel Place.
-                        <span>CG 09-123</span>
-                        London, Ba. 4567
+                    <h3>嘉定分部</h3>
+                    <h5>同济大学嘉定校区</h5>
+                    <p>上海市嘉定区安亭镇曹安公路4800号
                     </p>
-                    <h4>Get In Touch</h4>
-                    <p>Telephone: +1 234 567 9871
-                        <span>FAX: +1 234 567 9871</span>
-                        E-mail: <a href="mailto:info@example.com">mail@example.com</a>
+                    <h4>联系方式</h4>
+                    <p>
+                        <span>微博: <a href="https://weibo.com/u/5906341217">@同济大学猫咪同盟</a>  &nbsp;&nbsp;&nbsp;&nbsp;微信公众号: 同济猫盟</span>
+                        E-mail: <a href="mailto:contact_TJUCC@163.com">contact_TJUCC@163.com</a> &nbsp;&nbsp;&nbsp;&nbsp;QQ群: 271584610
                     </p>
                 </div>
-                <div class="col-md-6 contact-form">
-                    <form action="#" method="post">
-                        <input type="text" name="Name" placeholder="Name" required="">
-                        <input type="email" name="Email" placeholder="Email" required="">
-                        <input type="text" name="Subject" placeholder="Subject" required="">
-                        <textarea name="Message" placeholder="Message" required=""></textarea>
-                        <input type="submit" value="SEND">
-
-</form>
+                <div class="col-md-6 mail-grid-left">
+                    <h3>四平分部</h3>
+                    <h5>同济大学四平校区</h5>
+                    <p>上海市杨浦区四平路1239号
+                    </p>
+                    <h4>联系方式</h4>
+                    <p>
+                        <span>微博: <a href="https://weibo.com/u/5906341217">@同济大学猫咪同盟</a>  &nbsp;&nbsp;&nbsp;&nbsp;微信公众号: 同济猫盟</span>
+                        E-mail: <a href="mailto:contact_TJUCC@163.com">contact_TJUCC@163.com</a> &nbsp;&nbsp;&nbsp;&nbsp;QQ群: 631435029
+                    </p>
                 </div>
                 <div class="clearfix"> </div>
             </div>
@@ -55,17 +53,17 @@
             <el-form :model="editForm" label-width="80px" ref="editForm" shadow="never">
 
                 <el-form-item label="昵称" prop="nickname">
-                    <el-input v-model="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
+                    <el-input v-model="editForm.nickname" :value="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
                 </el-form-item>
                 <el-form-item label="更新头像">
-                    <el-upload class="avatar-uploader" :action="getPostUrl()" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <el-upload accept="image/*" class="avatar-uploader" :action="getPostUrl()" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <img style="height:100px; width:100px" v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
 
                 <el-form-item label="简介" prop="introduction">
-                    <el-input class="inline-input" v-model="editForm.introduction" placeholder="描述你自己">
+                    <el-input class="inline-input" v-model="editForm.introduction" :value="editForm.introduction" placeholder="描述你自己">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -98,9 +96,8 @@ export default {
             editLoading: false,
 
             editForm: {
-                nickname: "",
-                introduction: "",
-
+                nickname: '',
+                introduction: '',
             },
         }
     },
@@ -134,22 +131,20 @@ export default {
             return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
 
         },
-        addSubmit() {
+        async addSubmit() {
             this.$refs.editForm.validate((valid) => {
                 if (valid) {
-                    this.$confirm('确认修改吗？', '提示', {}).then(() => {
-                        this.editLoading = true;
-                        let data = Object.assign({}, this.editForm);
-                        sendPersonalMessage(data).then((response) => {
-                            this.editLoading = false;
-                            this.$message({
-                                message: '用户信息修改成功!',
-                                type: 'success'
-                            });
-                            this.$refs['editForm'].resetFields();
-                            this.editFormVisible = false;
+                    this.editLoading = true;
+                    let data = Object.assign({}, this.editForm);
+                    sendPersonalMessage(data).then((response) => {
+                        this.editLoading = false;
+                        this.$message({
+                            message: '用户信息修改成功!',
+                            type: 'success'
                         });
-                    })
+                        this.$refs['editForm'].resetFields();
+                        this.editFormVisible = false;
+                    });
                 }
             })
 
@@ -157,17 +152,24 @@ export default {
                 .then((res) => {
                     sessionStorage.setItem("UserUrl", res.data.headImageUrl);
                     sessionStorage.setItem("nickname", res.data.nickname);
-
                 });
-		},
-		Logout(){
-          sessionStorage.setItem("account",'');
-          sessionStorage.setItem("UserUrl",'');
-          sessionStorage.setItem("nickname",'');
-		  sessionStorage.setItem("token",'');
-          this.$router.push({path:'/Login'});
-	  },
+
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
+        },
+        Logout() {
+            sessionStorage.setItem("account", '');
+            sessionStorage.setItem("UserUrl", '');
+            sessionStorage.setItem("nickname", '');
+            sessionStorage.setItem("token", '');
+            this.$router.push({
+                path: '/Login'
+            });
+        },
     },
-    created() {},
+    async mounted() {
+        this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+        this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
+    },
 };
 </script>

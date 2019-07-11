@@ -55,7 +55,7 @@
                                         </div>
 
 </a>
-                                        <a v-for="image in cat.images" :key="image" :href="cat.headImageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate" style="display:none"></a>
+                                        <a v-for="image in cat.images" :key="image" :href="image.imageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate" style="display:none"></a>
                                         <div class="clearfix"> </div>
                                         <div style="display:inline"><a v-if="cat.isAdopt" class="button-disable">已&nbsp;领&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt(cat.catId,cat.catName,cat.age,cat.catGender)">领&nbsp;&nbsp;养</a>
                                             <a class="button" v-on:click="loginConfirm('上传图片前')">上传图片<input v-if="isLogin" ref="file" name="file" v-on:change="upload(cat.catId)" type="file" id="file" accept="image/*" capture="camera"></a>
@@ -77,17 +77,17 @@
             <el-form :model="editForm" label-width="80px" ref="editForm" shadow="never">
 
                 <el-form-item label="昵称" prop="nickname">
-                    <el-input v-model="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
+                    <el-input v-model="editForm.nickname" :value="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
                 </el-form-item>
                 <el-form-item label="更新头像">
-                    <el-upload class="avatar-uploader" :action="getPostUrl()" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <el-upload accept="image/*" class="avatar-uploader" :action="getPostUrl()" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <img style="height:100px; width:100px" v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
 
                 <el-form-item label="简介" prop="introduction">
-                    <el-input class="inline-input" v-model="editForm.introduction" placeholder="描述你自己">
+                    <el-input class="inline-input" v-model="editForm.introduction" :value="editForm.introduction" placeholder="描述你自己">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -124,10 +124,15 @@ $(function () {
 import buttom from '@/components/Buttom'
 import banner from '@/components/Banner'
 import form from '@/components/Form'
-import {sendPersonalMessage} from '../../src/api/Login'
+import {
+    sendPersonalMessage
+} from '../../src/api/Login'
 import {
     WOW
 } from 'wowjs'
+import {
+    constants
+} from 'fs';
 
 export default {
     name: 'Adopt',
@@ -142,11 +147,11 @@ export default {
             editLoading: false,
 
             editForm: {
-                nickname: "",
-                introduction: "",
-			},
-			
-			isLogin: false
+                nickname: '',
+                introduction: '',
+            },
+
+            isLogin: false
         }
     },
     components: {
@@ -174,6 +179,9 @@ export default {
                 }
                 this.cats[i]['images'] = this.catImages[i]
             }
+            console.log(this.cats)
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
         },
         show(color) {
             if (color == 'All') {
@@ -191,10 +199,10 @@ export default {
             this.api.uploadImage(id, file)
         },
         adopt(id, name, age, gender) {
-			if(this.isLogin==false){
-				this.loginConfirm('申请领养前')
-				return
-			}
+            if (this.isLogin == false) {
+                this.loginConfirm('申请领养前')
+                return
+            }
             sessionStorage.setItem('adoptCatId', id)
             sessionStorage.setItem('adoptCatName', name)
             sessionStorage.setItem('adoptCatAge', age)
@@ -210,16 +218,16 @@ export default {
             this.imageUrl = URL.createObjectURL(file.raw);
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            // const isImage = file.type === 'image/';
             const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!');
-            }
+            // if (!isImage) {
+            //     this.$message.error('上传头像图片只能是 JPG 格式!');
+            // }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            return isJPG && isLt2M;
+            return isLt2M;
         },
         getPostUrl() {
             return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")
@@ -228,22 +236,20 @@ export default {
             return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
 
         },
-        addSubmit() {
+        async addSubmit() {
             this.$refs.editForm.validate((valid) => {
                 if (valid) {
-                    this.$confirm('确认修改吗？', '提示', {}).then(() => {
-                        this.editLoading = true;
-                        let data = Object.assign({}, this.editForm);
-                        sendPersonalMessage(data).then((response) => {
-                            this.editLoading = false;
-                            this.$message({
-                                message: '用户信息修改成功!',
-                                type: 'success'
-                            });
-                            this.$refs['editForm'].resetFields();
-                            this.editFormVisible = false;
+                    this.editLoading = true;
+                    let data = Object.assign({}, this.editForm);
+                    sendPersonalMessage(data).then((response) => {
+                        this.editLoading = false;
+                        this.$message({
+                            message: '用户信息修改成功!',
+                            type: 'success'
                         });
-                    })
+                        this.$refs['editForm'].resetFields();
+                        this.editFormVisible = false;
+                    });
                 }
             })
 
@@ -252,18 +258,23 @@ export default {
                     sessionStorage.setItem("UserUrl", res.data.headImageUrl);
                     sessionStorage.setItem("nickname", res.data.nickname);
                 });
-		},
-		Logout(){
-          sessionStorage.setItem("account",'');
-          sessionStorage.setItem("UserUrl",'');
-          sessionStorage.setItem("nickname",'');
-		  sessionStorage.setItem("token",'');
-          this.$router.push({path:'/Login'});
-	  },
-	  loginConfirm(event){
-		  if (this.isLogin==true)
-		  	return 
-            this.$swal(event+"请先进行登录!").then((res) => {
+
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
+        },
+        Logout() {
+            sessionStorage.setItem("account", '');
+            sessionStorage.setItem("UserUrl", '');
+            sessionStorage.setItem("nickname", '');
+            sessionStorage.setItem("token", '');
+            this.$router.push({
+                path: '/Login'
+            });
+        },
+        loginConfirm(event) {
+            if (this.isLogin == true)
+                return
+            this.$swal(event + "请先进行登录!").then((res) => {
                 if (res.value) {
                     //  this.$store.dispatch('logout')
                     this.$router.push({
@@ -271,18 +282,19 @@ export default {
                     })
                 }
             })
-		},
-		check () {
-        if(sessionStorage.getItem('token'))
-            this.isLogin= true
-        else
-            this.isLogin= false
-	  },
+        },
+        check() {
+            if (sessionStorage.getItem('token'))
+                this.isLogin = true
+            else
+                this.isLogin = false
+        },
     },
     mounted() {
         new WOW().init()
-		this.init()
-		this.check()
+        this.init()
+        this.check()
+        console.log('1231', sessionStorage.getItem("account"))
     },
 };
 </script>

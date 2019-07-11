@@ -19,15 +19,17 @@
                     <div class="left-blog">
                         <div class="blog-left" v-for="blog in blogsShow.slice(blogLowIndex,blogHighIndex)" :key="blog">
                             <div class="blog-left-left">
-                                <p>发布者 <span v-text="blog.name" style="color:red;"></span> &nbsp;&nbsp;<span v-text="blog.time"></span></p>
+                                <p>发布时间 &nbsp;&nbsp;<span v-text="blog.time"></span></p>
                                 <!-- <p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on June 2, 2015 &nbsp;&nbsp; <a href="#">Comments (10)</a></p> -->
                                 <a><img :src="blog.cover" alt="暂无图片" /></a>
                             </div>
                             <div class="blog-left-right">
-                                <a href="javascript:void(0);" v-on:click="detail(blog.name,blog.time,blog.cover,blog.title,blog.text)"><p v-text="blog.title"></p></a>
-                                <p style="overflow: hidden;
+                                <a v-if="blog.title" href="javascript:void(0);" v-on:click="detail(blog.time,blog.cover,blog.title,blog.text)" v-text="blog.title"></a>
+                                <a v-else href="javascript:void(0);" v-on:click="detail(blog.time,blog.cover,blog.title,blog.text)" v-text="blog.title"></a>
+                                <p v-if="blog.text" style="overflow: hidden;
     white-space: nowrap;
     text-overflow:ellipsis;" v-text="blog.text"></p>
+                                <p v-else>暂无内容</p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
@@ -65,35 +67,30 @@
                             <li v-for="site in sites" :key="site"> <a href="javascript:void(0);" v-on:click="changeArchive(site.name)">{{site.name}}&nbsp;&nbsp;({{site.num}})</a></li>
                         </ul>
                     </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- //container -->
                 </div>
-                <!-- //blog -->
-				<div>
-    <el-dialog title="编辑个人信息" :visible.sync="editFormVisible" :close-on-click-modal="false" width="43%">
-      <!-- <el-card v-if="editFormVisible" width="auto"> -->
+            </div>
+        </div>
+        <!-- //container -->
+    </div>
+    <!-- //blog -->
+    <div>
+        <el-dialog title="编辑个人信息" :visible.sync="editFormVisible" :close-on-click-modal="false" width="43%">
+            <!-- <el-card v-if="editFormVisible" width="auto"> -->
             <!-- <p>编辑个人信息</p> -->
             <el-form :model="editForm" label-width="80px" ref="editForm" shadow="never">
 
                 <el-form-item label="昵称" prop="nickname">
-                    <el-input v-model="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
+                    <el-input v-model="editForm.nickname" :value="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
                 </el-form-item>
-                  <el-form-item label="更新头像">
-                      <el-upload
-                        class="avatar-uploader"
-                        :action="getPostUrl()"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <el-form-item label="更新头像">
+                    <el-upload accept="image/*" class="avatar-uploader" :action="getPostUrl()" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <img style="height:100px; width:100px" v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                      </el-upload>
-                  </el-form-item>
-                
+                    </el-upload>
+                </el-form-item>
+
                 <el-form-item label="简介" prop="introduction">
-                    <el-input class="inline-input" v-model="editForm.introduction" placeholder="描述你自己" >
+                    <el-input class="inline-input" v-model="editForm.introduction" :value="editForm.introduction" placeholder="描述你自己">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -104,16 +101,18 @@
 
             </div>
             <!-- </el-card> -->
-    </el-dialog> 
+        </el-dialog>
     </div>
-                <buttom></buttom>
-            </div>
+    <buttom></buttom>
+</div>
 </template>
 
 <script>
 import buttom from '@/components/Buttom'
 import banner from '@/components/Banner'
-import {sendPersonalMessage} from '../../src/api/Login'
+import {
+    sendPersonalMessage
+} from '../../src/api/Login'
 
 export default {
     name: 'Blog',
@@ -125,15 +124,15 @@ export default {
             blogsShow: [],
             blogs: [],
             sites: [],
-			targetPage: '',
-			editFormVisible:false,
-            imageUrl:"",
+            targetPage: '',
+            editFormVisible: false,
+            imageUrl: "",
             editLoading: false,
 
-            editForm: {       
-            nickname: "",
-			introduction: "",
-			}
+            editForm: {
+                nickname: '',
+                introduction: '',
+            }
         }
     },
     components: {
@@ -159,7 +158,6 @@ export default {
             var num = 0
             for (var i = 0; i < activities.length; i++) {
                 this.blogs.push({
-                    name: activities[i].adminNickname,
                     time: activities[i].actTime.slice(0, 10),
                     title: activities[i].activityTitle,
                     text: activities[i].activityDescription,
@@ -191,18 +189,21 @@ export default {
             this.blogNum = this.blogsShow.length
             if (this.blogNum < 2)
                 this.blogHighIndex = this.blogNum
-            //   })
-		},
-		detail(name,time,cover,title,text){
-			console.log('Go Now!',sessionStorage.getItem('goSingle'))
-			sessionStorage.setItem('blogName',name)
-			sessionStorage.setItem('blogTime',time)
-			sessionStorage.setItem('blogCover',cover)
-			sessionStorage.setItem('blogTitle',title)
-			sessionStorage.setItem('blogText',text)
-			sessionStorage.setItem('site',JSON.stringify(this.sites))
-			this.$router.push({path:'/Single'})
-		},
+
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
+        },
+        detail(time, cover, title, text) {
+            console.log('Go Now!', time, cover, title, text, sessionStorage.getItem('goSingle'))
+            sessionStorage.setItem('blogTime', time)
+            sessionStorage.setItem('blogCover', cover)
+            sessionStorage.setItem('blogTitle', title)
+            sessionStorage.setItem('blogText', text)
+            sessionStorage.setItem('site', JSON.stringify(this.sites))
+            this.$router.push({
+                path: '/Single'
+            })
+        },
         prePage() {
             document.documentElement.scrollTop = document.body.scrollTop = 310;
             if (this.blogLowIndex - 2 < 0)
@@ -249,88 +250,92 @@ export default {
                     this.blogsShow.push(this.blogs[i])
             }
             this.blogNum = this.blogsShow.length
-			this.changePage(1)
-		},
-		backFromDetail() {
-			var time=sessionStorage.getItem('archiveTime')
-			if(time)
-				this.changeArchive(time)
-		},
-		async checkSource() {
-			var goSingle=sessionStorage.getItem('goSingle')
-			if(goSingle==1){
-			await sessionStorage.setItem('goSingle',0)
-			console.log('go',sessionStorage.getItem('goSingle'))
-				this.detail(sessionStorage.getItem('blogName'),
-			sessionStorage.getItem('blogTime'),
-			sessionStorage.getItem('blogCover'),
-			sessionStorage.getItem('blogTitle'),
-			sessionStorage.getItem('blogText'))
-			}
-		},
-		showForm(){
-      this.editFormVisible=true
-    },
-    handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+            this.changePage(1)
+        },
+        async backFromDetail() {
+            var time = await sessionStorage.getItem('archiveTime')
+            if (time != '') {
+                this.changeArchive(time)
+                sessionStorage.setItem('archiveTime', '')
+            }
+        },
+        async checkSource() {
+            var goSingle = sessionStorage.getItem('goSingle')
+            if (goSingle == 1) {
+                await sessionStorage.setItem('goSingle', 0)
+                console.log('go', sessionStorage.getItem('goSingle'))
+                this.detail(
+                    sessionStorage.getItem('blogTime'),
+                    sessionStorage.getItem('blogCover'),
+                    sessionStorage.getItem('blogTitle'),
+                    sessionStorage.getItem('blogText'))
+            }
+        },
+        showForm() {
+            this.editFormVisible = true
+        },
+        handleAvatarSuccess(res, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
 
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      },
-      getPostUrl(){
-        return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")
-      },
-      getImageUrl(){
-        return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
-		    
-      },
-      addSubmit(){
-        this.$refs.editForm.validate((valid) => {
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+        },
+        getPostUrl() {
+            return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")
+        },
+        getImageUrl() {
+            return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
+
+        },
+        async addSubmit() {
+            this.$refs.editForm.validate((valid) => {
                 if (valid) {
-                    this.$confirm('确认修改吗？', '提示', {}).then(() => {
                     this.editLoading = true;
                     let data = Object.assign({}, this.editForm);
                     sendPersonalMessage(data).then((response) => {
-                            this.editLoading = false;
-                            this.$message({
-                                message: '用户信息修改成功!',
-                                type: 'success'
-                            });
-                            this.$refs['editForm'].resetFields();
-                            this.editFormVisible = false;
+                        this.editLoading = false;
+                        this.$message({
+                            message: '用户信息修改成功!',
+                            type: 'success'
                         });
-                       })
+                        this.$refs['editForm'].resetFields();
+                        this.editFormVisible = false;
+                    });
                 }
             })
-          
+
             this.axios.get('http://47.102.116.29/api/Users/' + sessionStorage.getItem("account"))
                 .then((res) => {
-                 sessionStorage.setItem("UserUrl",res.data.headImageUrl);
-                 sessionStorage.setItem("nickname",res.data.nickname);
-                
-                });         
-		},
-		Logout(){
-          sessionStorage.setItem("account",'');
-          sessionStorage.setItem("UserUrl",'');
-          sessionStorage.setItem("nickname",'');
-		  sessionStorage.setItem("token",'');
-          this.$router.push({path:'/Login'});
-	  },
+                    sessionStorage.setItem("UserUrl", res.data.headImageUrl);
+                    sessionStorage.setItem("nickname", res.data.nickname);
+                });
+
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
+        },
+        Logout() {
+            sessionStorage.setItem("account", '');
+            sessionStorage.setItem("UserUrl", '');
+            sessionStorage.setItem("nickname", '');
+            sessionStorage.setItem("token", '');
+            this.$router.push({
+                path: '/Login'
+            });
+        },
     },
     async mounted() {
-		await this.init()
-		this.backFromDetail()
-		this.checkSource()
+        await this.init()
+        this.backFromDetail()
+        this.checkSource()
     },
     created() {},
 };

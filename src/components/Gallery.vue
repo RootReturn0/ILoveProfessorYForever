@@ -1,65 +1,60 @@
 <template>
 <!-- gallary -->
-  <div>
+<div>
     <div class="banner about-banner">
-		<banner @transfer="showForm"></banner>
-		<div class="about-heading">	
-			<div class="container">
-				<h2>猫 盟 画 廊</h2>
-			</div>
-		</div>
-	</div>
+        <banner @transfer="showForm"></banner>
+        <div class="about-heading">
+            <div class="container">
+                <h2>猫 盟 画 廊</h2>
+            </div>
+        </div>
+    </div>
     <div class="gallery">
-      <div class="container">
-          <div class="animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-        <div class="gallery-grids">
-          <div class="col-md-4 gallery-grid" v-for="postcard in postcards" :key="postcard">
-            <div class="grid">
-              <figure class="effect-apollo">
-                <a
-                  class="example-image-link"
+        <div class="container">
+            <div class="animated wow fadeInDown " data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="gallery-grids">
+
+                    <div class="col-md-4 gallery-grid" v-for="postcard in postcards" :key="postcard">
+                        <div class="grid">
+                            <figure class="effect-apollo">
+                                <a
                   :href="postcard.imageUrl"
                   data-lightbox="example-set"
-                  data-title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut sem ac lectus mattis sagittis. Donec pulvinar quam sit amet est vestibulum volutpat. Phasellus sed nibh odio. Phasellus posuere at purus sit amet porttitor. Cras euismod egestas enim eget molestie. Aenean ornare condimentum odio, in lacinia felis finibus non. Nam faucibus libero et lectus finibus, sed porttitor velit pellentesque."
+                  :data-title="postcard.remark"
                 >
                   <img :src="postcard.imageUrl" alt=“”>
                   <figcaption>
-                    <p v-text="postcard.remark">Proin vitae luctus dui, sit amet ultricies leo</p>
+                    <p v-text="postcard.remark"></p>
                   </figcaption>
                 </a>
-              </figure>
-              <p><span v-if="postcard.producer">{{postcard.producer}}</span><span v-else>未知作者</span>，<span v-if="postcard.produceYear">{{postcard.produceYear}}</span><span v-else>未知年份</span></p>
+                            </figure>
+                            <p><span v-if="postcard.producer">{{postcard.producer}}</span><span v-else>未知作者</span>，<span v-if="postcard.produceYear">{{postcard.produceYear}}</span><span v-else>未知年份</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
         </div>
-      </div>
     </div>
-  <!-- gallary -->
-  <div>
-    <el-dialog title="编辑个人信息" :visible.sync="editFormVisible" :close-on-click-modal="false" width="43%">
-      <!-- <el-card v-if="editFormVisible" width="auto"> -->
+    <!-- gallary -->
+    <div>
+        <el-dialog title="编辑个人信息" :visible.sync="editFormVisible" :close-on-click-modal="false" width="43%">
+            <!-- <el-card v-if="editFormVisible" width="auto"> -->
             <!-- <p>编辑个人信息</p> -->
             <el-form :model="editForm" label-width="80px" ref="editForm" shadow="never">
 
                 <el-form-item label="昵称" prop="nickname">
-                    <el-input v-model="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
+                    <el-input v-model="editForm.nickname" :value="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
                 </el-form-item>
-                  <el-form-item label="更新头像">
-                      <el-upload
-                        class="avatar-uploader"
-                        :action="getPostUrl()"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <el-form-item label="更新头像">
+                    <el-upload accept="image/*" class="avatar-uploader" :action="getPostUrl()" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <img style="height:100px; width:100px" v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                      </el-upload>
-                  </el-form-item>
-                
+                    </el-upload>
+                </el-form-item>
+
                 <el-form-item label="简介" prop="introduction">
-                    <el-input class="inline-input" v-model="editForm.introduction" placeholder="描述你自己" >
+                    <el-input class="inline-input" v-model="editForm.introduction" :value="editForm.introduction" placeholder="描述你自己">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -70,108 +65,113 @@
 
             </div>
             <!-- </el-card> -->
-    </el-dialog> 
+        </el-dialog>
     </div>
-  <buttom></buttom>
-	<!-- copyright -->
-  </div>
+    <buttom></buttom>
+    <!-- copyright -->
+</div>
 </template>
 
 <script>
 import banner from '@/components/Banner'
 import buttom from '@/components/Buttom'
-import {sendPersonalMessage} from '../../src/api/Login'
+import {
+    sendPersonalMessage
+} from '../../src/api/Login'
 import {
     WOW
 } from 'wowjs'
 
 export default {
-  name: 'Gallary',
-  inject: ['reload'],
-  data(){
-    return{
-      postcards: [],
-      editFormVisible:false,
-      imageUrl:"",
-      editLoading: false,
-      editForm: {
-          nickname: "",
-          headPortrait: "",
-          introduction: "",
-      },
-    }
-  },
-  components: {
-		banner,
-		buttom
+    name: 'Gallary',
+    inject: ['reload'],
+    data() {
+        return {
+            postcards: [],
+            editFormVisible: false,
+            imageUrl: "",
+            editLoading: false,
+            editForm: {
+                nickname: '',
+                introduction: '',
+            },
+        }
     },
-  methods: {
-    async init() {
-      this.postcards= await this.api.getPostcard()
-      for(var i=0;i<this.postcards.length;i++){
-        this.postcards[i].imageUrl=this.api.baseAddress+this.postcards[i].imageUrl
-      }
-    },showForm(){
-      this.editFormVisible=true
+    components: {
+        banner,
+        buttom
     },
-    handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+    methods: {
+        async init() {
+            this.postcards = await this.api.getPostcard()
+            for (var i = 0; i < this.postcards.length; i++) {
+                this.postcards[i].imageUrl = this.api.baseAddress + this.postcards[i].imageUrl
+            }
 
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      },
-      getPostUrl(){
-        return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")
-      },
-      getImageUrl(){
-        return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
-		    
-      },
-      addSubmit(){
-        this.$refs.editForm.validate((valid) => {
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
+        },
+        showForm() {
+            this.editFormVisible = true
+        },
+        handleAvatarSuccess(res, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+        },
+        getPostUrl() {
+            return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")
+        },
+        getImageUrl() {
+            return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
+
+        },
+        async addSubmit() {
+            this.$refs.editForm.validate((valid) => {
                 if (valid) {
-                    this.$confirm('确认修改吗？', '提示', {}).then(() => {
                     this.editLoading = true;
                     let data = Object.assign({}, this.editForm);
                     sendPersonalMessage(data).then((response) => {
-                            this.editLoading = false;
-                            this.$message({
-                                message: '用户信息修改成功!',
-                                type: 'success'
-                            });
-                            this.$refs['editForm'].resetFields();
-                            this.editFormVisible = false;
+                        this.editLoading = false;
+                        this.$message({
+                            message: '用户信息修改成功!',
+                            type: 'success'
                         });
-                       })
+                        this.$refs['editForm'].resetFields();
+                        this.editFormVisible = false;
+                    });
                 }
             })
-          
+
             this.axios.get('http://47.102.116.29/api/Users/' + sessionStorage.getItem("account"))
                 .then((res) => {
-                 sessionStorage.setItem("UserUrl",res.data.headImageUrl);
-                 sessionStorage.setItem("nickname",res.data.nickname);
-                
+                    sessionStorage.setItem("UserUrl", res.data.headImageUrl);
+                    sessionStorage.setItem("nickname", res.data.nickname);
                 });
-            this.reload()   
-            this.$router.go(0);
+
+            this.editForm.nickname = await this.api.getUserName(sessionStorage.getItem('account'))
+            this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
         },
-        Logout(){
-          sessionStorage.setItem("account",'');
-          sessionStorage.setItem("UserUrl",'');
-          sessionStorage.setItem("nickname",'');
-		  sessionStorage.setItem("token",'');
-          this.$router.push({path:'/Login'});
-	  },
-  },
+        Logout() {
+            sessionStorage.setItem("account", '');
+            sessionStorage.setItem("UserUrl", '');
+            sessionStorage.setItem("nickname", '');
+            sessionStorage.setItem("token", '');
+            this.$router.push({
+                path: '/Login'
+            });
+        },
+    },
     mounted() {
         new WOW().init();
         this.init()
@@ -180,7 +180,7 @@ export default {
 </script>
 
 <style>
-  /* .avatar-uploader .el-upload {
+/* .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
@@ -203,14 +203,13 @@ export default {
     height: 178px;
     display: block;
   } */
-  .el-table .warning-row {
+.el-table .warning-row {
     background: oldlace;
 }
 
 /* .upload-demo{
   display: block
 } */
-
 
 .demo-table-expand {
     font-size: 0;
@@ -220,6 +219,4 @@ export default {
     width: 80px;
     color: #99a9bf;
 }
-
-
 </style>
