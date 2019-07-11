@@ -2,10 +2,10 @@
 <div>
     <!-- banner -->
     <div class="banner about-banner">
-        <banner></banner>
+        <banner @transfer="showForm"></banner>
         <div class="about-heading">
             <div class="container">
-                <h2>Our Blog</h2>
+                <h2>活 动 日 志</h2>
             </div>
         </div>
     </div>
@@ -21,24 +21,16 @@
                             <div class="blog-left-left">
                                 <p>发布者 <span v-text="blog.name" style="color:red;"></span> &nbsp;&nbsp;<span v-text="blog.time"></span></p>
                                 <!-- <p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on June 2, 2015 &nbsp;&nbsp; <a href="#">Comments (10)</a></p> -->
-                                <a href="javascript:void(0);"><img :src="blog.cover" alt="暂无图片" /></a>
+                                <a><img :src="blog.cover" alt="暂无图片" /></a>
                             </div>
                             <div class="blog-left-right">
-                                <a><p v-text="blog.title"></p></a>
-                                <p v-text="blog.text"></p>
+                                <a href="javascript:void(0);" v-on:click="detail(blog.name,blog.time,blog.cover,blog.title,blog.text)"><p v-text="blog.title"></p></a>
+                                <p style="overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;" v-text="blog.text"></p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
-						<!-- <div class="blog-left-right">
-                                <li><router-link to="/Single">Phasellus ultrices tellus eget ipsum ornare molestie</router-link></li>
-                                <button v-text="btnText" @click="showToggle"></button>
-                                <div v-show="isShow">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Sed blandit massa vel mauris sollicitudin 
-                                dignissim. Phasellus ultrices tellus eget ipsum ornare molestie scelerisque eros dignissim. Phasellus 
-                                fringilla hendrerit lectus nec vehicula. ultrices tellus eget ipsum ornare consectetur adipiscing elit.Sed blandit .
-                                estibulum aliquam neque nibh, sed accumsan nulla ornare sit amet.</p>
-                                </div>
-                            </div> -->
                     </div>
                     <nav>
                         <ul class="pagination">
@@ -49,7 +41,7 @@
 
 </a>
                             </li>
-                            <li v-for="i in Math.ceil(blogNum/2)" :key="i"><a href="javascript:void(0);" v-on:click="changePage(i)">{{i}}</a></li>
+                            <li v-for="i in (2,Math.ceil(blogNum/2))" :key="i"><a href="javascript:void(0);" v-on:click="changePage(i)">{{i}}</a></li>
                             <li>
                                 <a href="javascript:void(0);" v-on:click="nextPage()" aria-label="Next">
 
@@ -68,33 +60,52 @@
                 </div>
                 <div class="col-md-4 blog-top-right-grid">
                     <div class="Categories">
-                        <h3>Archive</h3>
+                        <h3>目录</h3>
                         <ul class="marked-list offs1">
                             <li v-for="site in sites" :key="site"> <a href="javascript:void(0);" v-on:click="changeArchive(site.name)">{{site.name}}&nbsp;&nbsp;({{site.num}})</a></li>
                         </ul>
                     </div>
-                    <div class="comments">
-                        <h3>负责人</h3>
-                        <div class="comments-text">
-                            <div class="col-md-3 comments-left">
-                                <img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
-
-</div>
-                                <div class="col-md-9 comments-right">
-                                    <h5>Admin</h5>
-                                    <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
-                                    <p style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">March 16,2014 6:09:pm</p>
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"> </div>
                         </div>
                     </div>
                     <!-- //container -->
                 </div>
                 <!-- //blog -->
+				<div>
+    <el-dialog title="编辑个人信息" :visible.sync="editFormVisible" :close-on-click-modal="false" width="43%">
+      <!-- <el-card v-if="editFormVisible" width="auto"> -->
+            <!-- <p>编辑个人信息</p> -->
+            <el-form :model="editForm" label-width="80px" ref="editForm" shadow="never">
+
+                <el-form-item label="昵称" prop="nickname">
+                    <el-input v-model="editForm.nickname" auto-complete="off" :maxlength="7"></el-input>
+                </el-form-item>
+                  <el-form-item label="更新头像">
+                      <el-upload
+                        class="avatar-uploader"
+                        :action="getPostUrl()"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      </el-upload>
+                  </el-form-item>
+                
+                <el-form-item label="简介" prop="introduction">
+                    <el-input class="inline-input" v-model="editForm.introduction" placeholder="描述你自己" >
+                    </el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="danger" @click="Logout">登出</el-button>
+                <el-button @click.native="editFormVisible = false">取消</el-button>
+                <el-button type="primary" @click="addSubmit" :loading="editLoading">提交</el-button>
+
+            </div>
+            <!-- </el-card> -->
+    </el-dialog> 
+    </div>
                 <buttom></buttom>
             </div>
 </template>
@@ -102,6 +113,7 @@
 <script>
 import buttom from '@/components/Buttom'
 import banner from '@/components/Banner'
+import {sendPersonalMessage} from '../../src/api/Login'
 
 export default {
     name: 'Blog',
@@ -114,8 +126,14 @@ export default {
             blogs: [],
             sites: [],
 			targetPage: '',
-			isShow: true,
-      btnText: "隐藏"
+			editFormVisible:false,
+            imageUrl:"",
+            editLoading: false,
+
+            editForm: {       
+            nickname: "",
+			introduction: "",
+			}
         }
     },
     components: {
@@ -125,7 +143,6 @@ export default {
     methods: {
         async init() {
             var activities = await this.api.getAllActivity()
-            console.log(activities)
             //   .then((activities) => {
             this.blogsShow = []
             this.sites = []
@@ -142,13 +159,12 @@ export default {
             var num = 0
             for (var i = 0; i < activities.length; i++) {
                 this.blogs.push({
-                    name: activities[i].adminId,
+                    name: activities[i].adminNickname,
                     time: activities[i].actTime.slice(0, 10),
                     title: activities[i].activityTitle,
                     text: activities[i].activityDescription,
                     cover: await this.api.getImage(activities[i].activityCover)
                 })
-                // console.log(imageUrl)
                 var flag = true
                 for (var j = 0; j < this.sites.length; j++) {
                     if (activities[i].actTime.slice(0, 7) == this.sites[j].name) {
@@ -165,7 +181,6 @@ export default {
                     })
                     num++
                 }
-                console.log('?!', this.sites.length, i)
             }
             this.sites.unshift({
                 name: '全部',
@@ -178,18 +193,18 @@ export default {
                 this.blogHighIndex = this.blogNum
             //   })
 		},
-		 showToggle(){
-          this.isShow = !this.isShow
-          if(this.isShow){
-            this.btnText = "收起"
-            }else{
-                this.btnText = "显示"
-            }
-      },
+		detail(name,time,cover,title,text){
+			console.log('Go Now!',sessionStorage.getItem('goSingle'))
+			sessionStorage.setItem('blogName',name)
+			sessionStorage.setItem('blogTime',time)
+			sessionStorage.setItem('blogCover',cover)
+			sessionStorage.setItem('blogTitle',title)
+			sessionStorage.setItem('blogText',text)
+			sessionStorage.setItem('site',JSON.stringify(this.sites))
+			this.$router.push({path:'/Single'})
+		},
         prePage() {
             document.documentElement.scrollTop = document.body.scrollTop = 310;
-            console.log('pre!')
-            console.log(this.blogLowIndex % 2, this.blogHighIndex % 2)
             if (this.blogLowIndex - 2 < 0)
                 return
             this.blogLowIndex -= 2
@@ -197,7 +212,6 @@ export default {
                 this.blogHighIndex -= this.blogHighIndex % 2
             else
                 this.blogHighIndex -= 2
-            console.log(this.blogLowIndex, this.blogHighIndex)
         },
         nextPage() {
             document.documentElement.scrollTop = document.body.scrollTop = 310;
@@ -233,14 +247,90 @@ export default {
             for (var i = 0; i < this.blogs.length; i++) {
                 if (this.blogs[i].time.slice(0, 7) == time)
                     this.blogsShow.push(this.blogs[i])
-                console.log('1234567')
             }
             this.blogNum = this.blogsShow.length
-            this.changePage(1)
-        }
+			this.changePage(1)
+		},
+		backFromDetail() {
+			var time=sessionStorage.getItem('archiveTime')
+			if(time)
+				this.changeArchive(time)
+		},
+		async checkSource() {
+			var goSingle=sessionStorage.getItem('goSingle')
+			if(goSingle==1){
+			await sessionStorage.setItem('goSingle',0)
+			console.log('go',sessionStorage.getItem('goSingle'))
+				this.detail(sessionStorage.getItem('blogName'),
+			sessionStorage.getItem('blogTime'),
+			sessionStorage.getItem('blogCover'),
+			sessionStorage.getItem('blogTitle'),
+			sessionStorage.getItem('blogText'))
+			}
+		},
+		showForm(){
+      this.editFormVisible=true
     },
-    mounted() {
-        this.init()
+    handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      getPostUrl(){
+        return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")
+      },
+      getImageUrl(){
+        return "http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
+		    
+      },
+      addSubmit(){
+        this.$refs.editForm.validate((valid) => {
+                if (valid) {
+                    this.$confirm('确认修改吗？', '提示', {}).then(() => {
+                    this.editLoading = true;
+                    let data = Object.assign({}, this.editForm);
+                    sendPersonalMessage(data).then((response) => {
+                            this.editLoading = false;
+                            this.$message({
+                                message: '用户信息修改成功!',
+                                type: 'success'
+                            });
+                            this.$refs['editForm'].resetFields();
+                            this.editFormVisible = false;
+                        });
+                       })
+                }
+            })
+          
+            this.axios.get('http://47.102.116.29/api/Users/' + sessionStorage.getItem("account"))
+                .then((res) => {
+                 sessionStorage.setItem("UserUrl",res.data.headImageUrl);
+                 sessionStorage.setItem("nickname",res.data.nickname);
+                
+                });         
+		},
+		Logout(){
+          sessionStorage.setItem("account",'');
+          sessionStorage.setItem("UserUrl",'');
+          sessionStorage.setItem("nickname",'');
+		  sessionStorage.setItem("token",'');
+          this.$router.push({path:'/Login'});
+	  },
+    },
+    async mounted() {
+		await this.init()
+		this.backFromDetail()
+		this.checkSource()
     },
     created() {},
 };

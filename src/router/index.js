@@ -5,11 +5,12 @@ import HomePage from '@/components/HomePage'
 import About from '@/components/About'
 import Blog from '@/components/Blog'
 import Contact from '@/components/Contact'
-import Adoptation from '@/components/Adoptation'
+import Cats from '@/components/Cats'
 import Form from '@/components/Form'
 import Single from '@/components/Single'
-
-
+import Login from '@/components/Login'
+import Register from '@/components/Register'
+import ForgetPsw from '@/components/ForgetPsw'
 Vue.use(Router)
 
 export default new Router({
@@ -20,14 +21,29 @@ export default new Router({
       component: HomePage
     },
     {
+      path:'/Login',
+      name:'Login',
+      component:Login
+    },
+    {
+      path:'/ForgetPsw',
+      name:'ForgetPsw',
+      component:ForgetPsw
+    },
+    {
+     path:'/Register',
+     name:'Register',
+      component:Register
+    },
+    {
       path: '/About',
       name: 'About',
       component: About
     },
     {
-      path: '/Adoptation',
-      name: 'Adoptation',
-      component: Adoptation
+      path: '/Cats',
+      name: 'Cats',
+      component: Cats
     },
     {
       path: '/Gallery',

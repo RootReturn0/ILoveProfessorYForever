@@ -50,7 +50,7 @@ body a {
   /*-- //header-left --*/
   .header-right{
       float: right;
-      margin: 1.4em 0 0 0;
+      margin: 1.5em 0 0 0;
   }
   /*-- top-nav --*/
   .top-nav{
@@ -172,6 +172,7 @@ body a {
   .agileinfo-social-grids{
       float: right;
       margin-left: 3em;
+      margin-top: -.09em;
   }
   .agileinfo-social-grids ul{
       padding:0;
@@ -3477,3 +3478,6 @@ input[type="button"]:hover {
     opacity: 0.8;
 }
 
+input[type="file"]{
+    display: none;
+}

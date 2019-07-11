@@ -11,8 +11,8 @@
 					<div class="footer-social-grids">
 						<ul>
 							<li><a href="https://weibo.com/u/5906341217"><i class="fa fa-weibo"></i></a></li>
-							<li><a class="example-image-link" href="http://47.102.116.29:5050/image/head/head001.jpg" data-lightbox="example-set" ><i class="fa fa-weixin"></i></a></li>
-							<li><a href="https://jq.qq.com/?_wv=1027&k=5LIcg4L"><i class="fa fa-qq"></i></a></li>
+							<li><a href="http://47.102.116.29:5050/wexin.jpg" data-lightbox="ss" ><i class="fa fa-weixin"></i></a></li>
+							<li><a href="http://47.102.116.29:5050/qq.jpg" data-lightbox="sss"><i class="fa fa-qq"></i></a></li>
 						</ul>
 					</div>
 				</div>
@@ -27,7 +27,7 @@
                                     <router-link to="/About">简介</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/Adoptation">领养</router-link>
+                                    <router-link to="/Cats">领养</router-link>
                                 </li>
 						</ul>
 					</div>
@@ -71,6 +71,8 @@
 </template>>
 
 <script>
+import wxImg from '@/assets/images/WXQR.jpg'
+import qqImg from '@/assets/images/QQQR.png'
 export default {
   name: "Buttom",
 };

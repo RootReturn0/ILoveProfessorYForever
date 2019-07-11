@@ -35,7 +35,7 @@
                                     <router-link to="/About">简介</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/Adoptation">领养</router-link>
+                                    <router-link to="/Cats">猫咪</router-link>
                                 </li>
                                 <li>
                                     <router-link to="/Gallery">相册</router-link>
@@ -49,26 +49,96 @@
                             </ul>
                             <div class="clearfix"> </div>
                         </div>
-                    </nav>
+                    </nav>  
                 </div>
-                <div class="agileinfo-social-grids">
-                    <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                <div v-if="isLogin" class="agileinfo-social-grids">
+								<div float="top-right" style="margin-top:0px; margin-right:0px;Height:50px">		
+									<span class="userinfo-inner agileinfo-social-grids" ><img @click="showForm" :src="userUrl"></span>
+                				</div>
+								</div>	
+                <div v-else class="agileinfo-social-grids">
+                    <ul >
+						<li><a href="#" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						<li><a href="#" @click="login">&nbsp;登陆</a></li>
+						<li><a href="#" @click="register">&nbsp;注册</a></li>
                     </ul>
                 </div>
-                <div class="clearfix"> </div>
+                <div class="clearfix"> 
+                    
+                </div>
             </div>
             <div class="clearfix"> </div>
         </div>
+        
     </div>
+    <!-- -->
 </div>
+
+
+    
+
 </template>
 
 <script>
 export default {
-    name: 'Banner',
+   name: 'Banner',
+  data(){
+	  return{
+		  userUrl:'',
+		  isLogin:false
+	  }
+	
+  },
+
+  methods:{
+	  getUrl () {
+		  this.userUrl="http://47.102.116.29:5050/" + sessionStorage.getItem("UserUrl");
+      },
+      addPersonMessage (){
+
+      },
+      showForm(){
+          this.$emit('transfer')
+	  },
+	  check () {
+        if(sessionStorage.getItem('token'))
+            this.isLogin= true
+        else
+            this.isLogin= false
+	  },
+	  login(){
+		  this.$router.push({path:'/Login'})
+	  },
+	  register(){
+		  this.$router.push({path:'/Register'})
+	  }
+  },
+  mounted(){
+	this.check()
+	this.getUrl()
+	setInterval(this.getUrl,1000)
+  },
+  created(){
+	//   getUrl();
+  }
 }
 </script>
+
+<style lang="scss">
+.userinfo-inner {
+    cursor: pointer;
+        color: #fff;
+         //font-weight: 400;
+		font-family: "Arial";
+        img {
+        width: 60px;
+        height: 60px;
+        border-radius: 20px;
+        //margin: 10px 0px 10px 10px;
+        float: right;
+        border-color: rgba(255, 255, 255, 1);
+        border-width: 1px;
+        border-style: solid;
+        }
+}
+</style>
