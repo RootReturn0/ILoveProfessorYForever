@@ -438,7 +438,7 @@ export default {
             this.editForm.introduction = await this.api.getUserIntro(sessionStorage.getItem('account'))
         },
         check() {
-            if (sessionStorage.getItem('token'))
+            if (sessionStorage.getItem('account'))
                 this.isLogin = true
             else
                 this.isLogin = false

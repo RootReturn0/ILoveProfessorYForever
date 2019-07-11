@@ -284,7 +284,7 @@ export default {
             })
         },
         check() {
-            if (sessionStorage.getItem('token'))
+            if (sessionStorage.getItem('account'))
                 this.isLogin = true
             else
                 this.isLogin = false

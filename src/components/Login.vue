@@ -117,6 +117,7 @@ export default {
 
                     }
                 })
+                console.log(sessionStorage.getItem('token'))
                 return true;
             };
 

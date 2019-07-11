@@ -63,7 +63,7 @@ const store1 = {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(res => res.meta.requireAuth)) {// 判断是否需要登录权限
-    if (sessionStorage.getItem('token')) {// 判断是否登录
+    if (sessionStorage.getItem('account')) {// 判断是否登录
       next()
     } else {// 没登录则跳转到登录界面
       next({
@@ -79,7 +79,7 @@ axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   // 判断是否存在token,如果存在将每个页面header添加token
   if (store.state.token) {
-    config.headers.Authorization = `Bearer ${sessionStorage.getItem("token")}`,
+    // config.headers.Authorization = `Bearer ${sessionStorage.getItem("token")}`,
     console.log(sessionStorage.getItem("token"));
   }
   return config

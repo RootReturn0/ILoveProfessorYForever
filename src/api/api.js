@@ -78,14 +78,15 @@ export default {
         }
     },
 
-    uploadImage: function (id, file) {
+    uploadImage: async function (id, file) {
+        var account =await sessionStorage.getItem('account')
         var data = new FormData()
-
-        data.append('userAccount', '150939023@qq.com')
+        console.log(account)
+        data.append('userAccount', account)
         data.append('catID', id)
         data.append('file', file)
 
-        axios.post(apiAddress + 'Images/uploadApplyToCatImage?' + 'catID=' + id + '&' + 'userAccount=' + '150939023@qq.com', data)
+        axios.post(apiAddress + 'Images/uploadApplyToCatImage?' + 'catID=' + id + '&' + 'userAccount=' + account, data)
             .then(res => {
                 console.log('res=>', res);
             })
