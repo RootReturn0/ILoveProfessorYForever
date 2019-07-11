@@ -45,7 +45,7 @@
                                                     <div class="back face">
 														<div><p>性别：<span v-text="cat.catGender"></span></p></div>
                                                         <div><p>毛色：<span v-text="cat.colorName"></span></p></div>
-														<div><p>是否绝育：<span v-if="cat.isSterilization">是</span><span v-else>否</span></p></div>
+														<div><p>是否绝育：<span v-if="cat.isAdopt">是</span><span v-else>否</span></p></div>
                                                     </div>
                                                 </div>
                                                 <div class="bottom" :style="{backgroundImage: 'url(' + cat.headImageUrl + ')' }"></div>
@@ -54,7 +54,7 @@
 										</a> 
 										<a v-for="image in cat.images" :key="image" :href="cat.headImageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate" style="display:none"></a>
 										<div class="clearfix"> </div>
-                                        <div style="display:inline"><a v-if="cat.isSterilization" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt()">领&nbsp;&nbsp;养</a>
+                                        <div style="display:inline"><a v-if="cat.isAdopt" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt(cat.catId)">领&nbsp;&nbsp;养</a>
 										<a class="button">上传图片<input ref="file" name="file" v-on:change="upload(cat.catId)" type="file" id="file" accept="image/*" capture="camera"></a>
 										</div>
 
@@ -92,6 +92,7 @@ $(function () {
 });
 import buttom from '@/components/Buttom'
 import banner from '@/components/Banner'
+import form from '@/components/Form'
 import {
     WOW
 } from 'wowjs'
@@ -153,7 +154,9 @@ export default {
 			console.log(file)
 			this.api.uploadImage(id,file)
 		},
-        adopt() {
+        adopt(id) {
+			sessionStorage.setItem('adoptCat',id)
+			// this.$store.commit('newCat',id)
             this.$router.push({
                 path: '/Form'
             })

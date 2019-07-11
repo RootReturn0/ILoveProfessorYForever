@@ -92,20 +92,16 @@ export default {
     },
 
     uploadAdopt: function (data) {
-        var formdata= new FormData()
-         formdata.append('applicationID','111111')
-         formdata.append('applicationTime','2019-07-11T16:00:00')
-         formdata.append('userAccount',data.userAccount)
-         formdata.append('catID',data.catID)
-         formdata.append('reason',data.reason)
-         formdata.append('attachment',data.attachment)
-         formdata.append('auditStatus',data.auditStatus)
-         formdata.append('userName',data.userName)
-         formdata.append('userPhone',data.userPhone)
-         formdata.append('userEmail',data.userEmail)
-         formdata.append('userAddress',data.userAddress)
-         formdata.append('userGender',data.userGender)
-         console.log(formdata)
+        //  var formdata=JSON.stringify(data)
+        console.log(data)
+        // axios({
+        //     url: apiAddress+'ApplyToAdopts',
+        //     method: 'post',
+        //     data: data,
+        //     headers: {'Content-Type':'application/json'}
+        // }).then(res=>{
+        //     console.log('res=>',res);   
+        // })
         axios.post(apiAddress+'ApplyToAdopts',data)
         .then(res=>{
             console.log('res=>',res);            

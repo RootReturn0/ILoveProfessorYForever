@@ -2506,7 +2506,26 @@ article img{display: inline-block;max-width: 250px;float: left;padding-right: 15
 	text-align: center;
     margin-left: -20px;
     color: #fff ;
-    background: #C9000B ;
+    opacity: 0.97;
+    /* background:  rgb(231, 33, 19); */
+    background:rgb(206, 8, 18);
+    -webkit-box-shadow: 3px 2px 4px rgba(0,0,0,.5);
+    -moz-box-shadow: 3px 2px 4px rgba(0,0,0,.5);
+    box-shadow: 3px 2px 4px rgba(0,0,0,.5);}
+.ribbon:hover {  
+    position: absolute;  
+    top: 50px;
+    position: relative;
+    display: inline-block;
+    font-size: 21px;
+    width: 170px;        
+    padding: 6px 0px;
+    text-align: center;
+    margin-left: -20px;
+    color: #fff ;
+    opacity: 1;
+    /* background:  rgb(231, 33, 19); */
+    background:rgb(206, 8, 18);
     -webkit-box-shadow: 3px 2px 4px rgba(0,0,0,.5);
     -moz-box-shadow: 3px 2px 4px rgba(0,0,0,.5);
     box-shadow: 3px 2px 4px rgba(0,0,0,.5);}
@@ -2554,7 +2573,7 @@ a.button{
 	border:1px solid #ffffff; 
 	display: inline-block;
 	text-decoration: none;
-	background: #5A0000;
+	background: rgb(231, 33, 19);
 	margin: 10px 0;
 	padding: 5px 15px;
 	color: #fff;
@@ -2565,7 +2584,10 @@ a.button{
     overflow: hidden;
     z-index: 0;
 }
-a.button:hover{opacity: 0.9;}
+a.button:hover{
+    opacity: 0.9;
+    background: #5A0000;
+}
 
 a.button-disable{
     cursor: not-allowed;
@@ -2598,7 +2620,6 @@ a.button input{
     z-index: 10;
     font-size: 60px
 }
-
 /* ---------------------------------------- here is for Form ------------------------------------ */
 
 

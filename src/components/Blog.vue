@@ -48,12 +48,12 @@
 </a>
                             </li>
                         </ul>
-						<ul class="pagination">
-														<li>                                <a><p style="display:inline">前往&nbsp;<input type="text" v-model="targetPage" style="height: 20px; width:20px;border-bottom:#666 1px solid; border-left-width:0px; border-right-width:0px; border-top-width:0px">&nbsp;页</p></a> 
-</li>
-<li><a href="javascript:void(0);" v-on:click="changePage(targetPage)">Go</a></li>
+                        <ul class="pagination">
+                            <li> <a><p style="display:inline">前往&nbsp;<input type="text" v-model="targetPage" style="height: 20px; width:20px;border-bottom:#666 1px solid; border-left-width:0px; border-right-width:0px; border-top-width:0px">&nbsp;页</p></a>
+                            </li>
+                            <li><a href="javascript:void(0);" v-on:click="changePage(targetPage)">Go</a></li>
 
-						</ul>
+                        </ul>
                     </nav>
                 </div>
                 <div class="col-md-4 blog-top-right-grid">
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="clearfix"> </div>
                             </div>
-                            <div class="comments-text">
+                            <!-- <div class="comments-text">
                                 <div class="col-md-3 comments-left">
                                     <img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
 
@@ -88,19 +88,19 @@
                                         <p>March 16,2014 6:09:pm</p>
                                     </div>
                                     <div class="clearfix"> </div>
-                                </div>
-                                <div class="comments-text">
-                                    <div class="col-md-3 comments-left">
+                                </div> -->
+                                <!-- <div class="comments-text"> -->
+                                    <!-- <div class="col-md-3 comments-left">
                                         <img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
 
-</div>
-                                        <div class="col-md-9 comments-right">
+</div> -->
+                                        <!-- <div class="col-md-9 comments-right">
                                             <h5>Admin</h5>
                                             <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
                                             <p>March 16,2014 6:09:pm</p>
-                                        </div>
-                                        <div class="clearfix"> </div>
-                                    </div>
+                                        </div> -->
+                                        <!-- <div class="clearfix"> </div> -->
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <div class="clearfix"> </div>
@@ -126,8 +126,8 @@ export default {
             blogNum: 0,
             blogsShow: [],
             blogs: [],
-			sites: [],
-			targetPage: ''
+            sites: [],
+            targetPage: ''
         }
     },
     components: {
@@ -178,7 +178,7 @@ export default {
                     num++
                 }
                 console.log('?!', this.sites.length, i)
-			}
+            }
             this.sites.unshift({
                 name: '全部',
                 num: num
@@ -191,7 +191,7 @@ export default {
             //   })
         },
         prePage() {
-			document.documentElement.scrollTop = document.body.scrollTop = 310;
+            document.documentElement.scrollTop = document.body.scrollTop = 310;
             console.log('pre!')
             console.log(this.blogLowIndex % 2, this.blogHighIndex % 2)
             if (this.blogLowIndex - 2 < 0)
@@ -201,37 +201,37 @@ export default {
                 this.blogHighIndex -= this.blogHighIndex % 2
             else
                 this.blogHighIndex -= 2
-			console.log(this.blogLowIndex, this.blogHighIndex)
+            console.log(this.blogLowIndex, this.blogHighIndex)
         },
         nextPage() {
-			document.documentElement.scrollTop = document.body.scrollTop = 310;
+            document.documentElement.scrollTop = document.body.scrollTop = 310;
             if (this.blogLowIndex + 2 >= this.blogNum)
                 return
             if (this.blogHighIndex + 2 > this.blogNum)
                 this.blogHighIndex = this.blogNum
             else
                 this.blogHighIndex += 2
-			this.blogLowIndex += 2
+            this.blogLowIndex += 2
         },
         changePage(curPage) {
-			this.targetPage=''
-			if(curPage<1||curPage>Math.ceil(this.blogNum/2))
-				return
-			document.documentElement.scrollTop = document.body.scrollTop = 310;
+            this.targetPage = ''
+            if (curPage < 1 || curPage > Math.ceil(this.blogNum / 2))
+                return
+            document.documentElement.scrollTop = document.body.scrollTop = 310;
             var target = curPage * 2
             if (this.blogNum < target || this.blogNum < 2)
                 this.blogHighIndex = this.blogNum
             else
                 this.blogHighIndex = target
-			this.blogLowIndex = target - 2
+            this.blogLowIndex = target - 2
         },
         changeArchive(time) {
-			document.documentElement.scrollTop = document.body.scrollTop = 310;
+            document.documentElement.scrollTop = document.body.scrollTop = 310;
             if (time == '全部') {
-				this.blogsShow = this.blogs
-				this.blogNum = this.blogsShow.length
-			this.changePage(1)
-				return
+                this.blogsShow = this.blogs
+                this.blogNum = this.blogsShow.length
+                this.changePage(1)
+                return
             }
             this.blogsShow = []
             for (var i = 0; i < this.blogs.length; i++) {
@@ -239,8 +239,8 @@ export default {
                     this.blogsShow.push(this.blogs[i])
                 console.log('1234567')
             }
-			this.blogNum = this.blogsShow.length
-			this.changePage(1)
+            this.blogNum = this.blogsShow.length
+            this.changePage(1)
         }
     },
     mounted() {

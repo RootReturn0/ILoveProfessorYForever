@@ -203,17 +203,14 @@ import banner from '@/components/Banner'
 export default {
   name: 'Form',
   data(){
-    console.log(this.loll)
     // return{
     //   lol: this.loll
     // }
     return {
         form: {
-            // applicationID: 'id',
             userAccount: '150939023@qq.com',
-            carID: 'ca1',
-            // applicationTime:'',
-            reason:'',
+            catId: sessionStorage.getItem('adoptCat'),
+            reason:'sad',
             attachment:'',
             auditStatus:'',
             userName:'',
@@ -224,10 +221,12 @@ export default {
             }
         }
     },
+    props:['catId'],
     methods: {
-        async submit () {
+        submit () {
+           console.log(this.form.catId)
          //   var formData = JSON.stringify(this.form)
-           this.api.uploadAdopt(this.form)
+         //   this.api.uploadAdopt(this.form)
         }
     },
 
