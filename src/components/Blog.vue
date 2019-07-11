@@ -29,6 +29,16 @@
                             </div>
                             <div class="clearfix"> </div>
                         </div>
+						<!-- <div class="blog-left-right">
+                                <li><router-link to="/Single">Phasellus ultrices tellus eget ipsum ornare molestie</router-link></li>
+                                <button v-text="btnText" @click="showToggle"></button>
+                                <div v-show="isShow">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Sed blandit massa vel mauris sollicitudin 
+                                dignissim. Phasellus ultrices tellus eget ipsum ornare molestie scelerisque eros dignissim. Phasellus 
+                                fringilla hendrerit lectus nec vehicula. ultrices tellus eget ipsum ornare consectetur adipiscing elit.Sed blandit .
+                                estibulum aliquam neque nibh, sed accumsan nulla ornare sit amet.</p>
+                                </div>
+                            </div> -->
                     </div>
                     <nav>
                         <ul class="pagination">
@@ -49,7 +59,7 @@
                             </li>
                         </ul>
                         <ul class="pagination">
-                            <li> <a><p style="display:inline">前往&nbsp;<input type="text" v-model="targetPage" style="height: 20px; width:20px;border-bottom:#666 1px solid; border-left-width:0px; border-right-width:0px; border-top-width:0px">&nbsp;页</p></a>
+                            <li> <a><p style="display:inline">前往&nbsp;<input type="text" v-model="targetPage" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="height: 20px; width:30px;border-bottom:#666 1px solid; border-left-width:0px; border-right-width:0px; border-top-width:0px">&nbsp;页</p></a>
                             </li>
                             <li><a href="javascript:void(0);" v-on:click="changePage(targetPage)">Go</a></li>
 
@@ -77,30 +87,6 @@
                                 </div>
                                 <div class="clearfix"> </div>
                             </div>
-                            <!-- <div class="comments-text">
-                                <div class="col-md-3 comments-left">
-                                    <img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
-
-</div>
-                                    <div class="col-md-9 comments-right">
-                                        <h5>Admin</h5>
-                                        <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
-                                        <p>March 16,2014 6:09:pm</p>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div> -->
-                                <!-- <div class="comments-text"> -->
-                                    <!-- <div class="col-md-3 comments-left">
-                                        <img src="http://47.102.116.29:5050/image/head/head001.jpg" alt="" />
-
-</div> -->
-                                        <!-- <div class="col-md-9 comments-right">
-                                            <h5>Admin</h5>
-                                            <a href="javascript:void(0);">Phasellus sem leointerdum risus</a>
-                                            <p>March 16,2014 6:09:pm</p>
-                                        </div> -->
-                                        <!-- <div class="clearfix"> </div> -->
-                                    <!-- </div> -->
                                 </div>
                             </div>
                             <div class="clearfix"> </div>
@@ -127,7 +113,9 @@ export default {
             blogsShow: [],
             blogs: [],
             sites: [],
-            targetPage: ''
+			targetPage: '',
+			isShow: true,
+      btnText: "隐藏"
         }
     },
     components: {
@@ -189,7 +177,15 @@ export default {
             if (this.blogNum < 2)
                 this.blogHighIndex = this.blogNum
             //   })
-        },
+		},
+		 showToggle(){
+          this.isShow = !this.isShow
+          if(this.isShow){
+            this.btnText = "收起"
+            }else{
+                this.btnText = "显示"
+            }
+      },
         prePage() {
             document.documentElement.scrollTop = document.body.scrollTop = 310;
             console.log('pre!')

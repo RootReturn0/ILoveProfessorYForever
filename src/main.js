@@ -7,6 +7,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import api from './api'
 
+// 引入插件
+import VueSweetalert2 from './plugins/vue-sweetalert2' 
+// 使用插件
+Vue.use(VueSweetalert2)
+Vue.config.productionTip = false
+
+
 Vue.prototype.api=api
 
 import '../static/css/bootstrap.css'
@@ -15,6 +22,7 @@ import '../static/css/lightbox.css'
 import '../static/css/style.css'
 import '../static/css/zerogrid.css'
 import 'animate.css'
+import swal from 'sweetalert2'
 
 
 import $ from 'jquery'
@@ -43,5 +51,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
 })

@@ -54,7 +54,7 @@
 										</a> 
 										<a v-for="image in cat.images" :key="image" :href="cat.headImageUrl" :data-lightbox="cat.catName" :title="cat.characteristics+cat.locate" style="display:none"></a>
 										<div class="clearfix"> </div>
-                                        <div style="display:inline"><a v-if="cat.isAdopt" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt(cat.catId)">领&nbsp;&nbsp;养</a>
+                                        <div style="display:inline"><a v-if="cat.isAdopt" class="button-disable">领&nbsp;&nbsp;养</a><a v-else href="javascript:void(0);" class="button" v-on:click="adopt(cat.catId,cat.catName,cat.age,cat.catGender)">领&nbsp;&nbsp;养</a>
 										<a class="button">上传图片<input ref="file" name="file" v-on:change="upload(cat.catId)" type="file" id="file" accept="image/*" capture="camera"></a>
 										</div>
 
@@ -154,9 +154,11 @@ export default {
 			console.log(file)
 			this.api.uploadImage(id,file)
 		},
-        adopt(id) {
-			sessionStorage.setItem('adoptCat',id)
-			// this.$store.commit('newCat',id)
+        adopt(id,name,age,gender) {
+			sessionStorage.setItem('adoptCatId',id)
+			sessionStorage.setItem('adoptCatName',name)
+			sessionStorage.setItem('adoptCatAge',age)
+			sessionStorage.setItem('adoptCatGender',gender)
             this.$router.push({
                 path: '/Form'
             })
