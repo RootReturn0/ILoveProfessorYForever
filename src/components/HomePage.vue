@@ -77,7 +77,7 @@
                         <ul class="rslides callbacks callbacks1" id="slider4">
                             <li>
                                 <div class="agileits-banner-info">
-                                    <h3>Ｏ(≧▽≦)Ｏ<br>同济猫咪同盟 <span>快来加入我们吧</span></h3>
+                                    <h3><br>同济猫咪同盟 <span>快来加入我们吧</span></h3>
                                     <div class="w3-button">
                                         <a href="javascript:void(0);" @click="goToAbout">更多</a>
                                     </div>
@@ -85,7 +85,7 @@
                             </li>
                             <li>
                                 <div class="agileits-banner-info">
-                                    <h3>Ｏ(≧▽≦)Ｏ<br>欢迎来到猫咪之家 <span>快来加入我们吧</span></h3>
+                                    <h3><br>欢迎来到猫咪之家 <span>快来加入我们吧</span></h3>
                                     <div class="w3-button">
                                         <a href="javascript:void(0);">更多</a>
                                     </div>
@@ -393,16 +393,16 @@ export default {
             this.imageUrl = URL.createObjectURL(file.raw);
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            // const isImage = file.type === 'image/';
             const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!');
-            }
+            // if (!isImage) {
+            //     this.$message.error('上传头像图片只能是 JPG 格式!');
+            // }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            return isJPG && isLt2M;
+            return isLt2M;
         },
         getPostUrl() {
             return "http://47.102.116.29/api/Images/uploadUserHead?userID=" + sessionStorage.getItem("account")

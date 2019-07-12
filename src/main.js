@@ -54,7 +54,7 @@ Vue.config.productionTip = false
 router.afterEach((to,from,next) => {
   window.scrollTo(0,0);
 });
-//路由全局守卫
+// 路由全局守卫
 const store1 = {
   state: {
     token: sessionStorage.getItem('token') || '',
@@ -78,8 +78,8 @@ router.beforeEach((to, from, next) => {
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   // 判断是否存在token,如果存在将每个页面header添加token
-  if (store.state.token) {
-    // config.headers.Authorization = `Bearer ${sessionStorage.getItem("token")}`,
+  if (true) {
+    config.headers.Authorization = `Bearer ${sessionStorage.getItem("token")}`,
     console.log(sessionStorage.getItem("token"));
   }
   return config

@@ -85,7 +85,6 @@ export default {
         data.append('userAccount', account)
         data.append('catID', id)
         data.append('file', file)
-
         axios.post(apiAddress + 'Images/uploadApplyToCatImage?' + 'catID=' + id + '&' + 'userAccount=' + account, data)
             .then(res => {
                 console.log('res=>', res);

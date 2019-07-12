@@ -100,8 +100,8 @@ export default {
                             this.api.getUserInfo(data.account)
                             sessionStorage.setItem("account", data.account);
                             sessionStorage.setItem("token", response);
-                            this.$store.dispatch("setAccount", data.account);
-                            this.$store.dispatch("setToken", response);
+                           // this.$store.dispatch("setAccount", data.account);
+                           // this.$store.dispatch("setToken", response);
                             this.$router.push({
                                 path: '/'
                             });
@@ -111,8 +111,6 @@ export default {
                                 message: '账号不存在或密码错误！',
                                 type: 'error'
                             });
-                            this.$store.dispatch("setAccount", null);
-                            this.$store.dispatch("setToken", null);
                         });
 
                     }
