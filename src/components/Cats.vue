@@ -274,7 +274,7 @@ export default {
         loginConfirm(event) {
             if (this.isLogin == true)
                 return
-            this.$swal(event + "请先进行登录!").then((res) => {
+            this.$swal(event + "请先进行登录!","","warning").then((res) => {
                 if (res.value) {
                     //  this.$store.dispatch('logout')
                     this.$router.push({

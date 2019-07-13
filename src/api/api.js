@@ -91,7 +91,7 @@ export default {
             })
     },
 
-    uploadAdopt: function (data) {
+    uploadAdopt: async function (data) {
         //  var formdata=JSON.stringify(data)
         console.log(data)
         // axios({
@@ -102,10 +102,9 @@ export default {
         // }).then(res=>{
         //     console.log('res=>',res);   
         // })
-        axios.post(apiAddress + 'ApplyToAdopts', data)
-            .then(res => {
-                console.log('res=>', res);
-            })
+        var test= await axios.post(apiAddress + 'ApplyToAdopts', data)
+        console.log(test)
+        return test.statusText
     },
 
     getUserInfo: async function (account) {

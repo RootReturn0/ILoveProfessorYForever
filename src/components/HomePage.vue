@@ -216,27 +216,27 @@
                         <div class="agileits-line"> </div>
                     </div>
                     <div class="w3-agile-news-img">
-                        <a href="javascript:void(0);"><img :src="blog1.activityCover" alt="" /></a>
-                        <h4><a href="javascript:void(0);"><span v-on:click="detail(blog1.actTime.slice(0,10),blog1.activityCover,blog1.activityTitle,blog1.activityDescription)" v-if="blog1.activityTitle">{{blog1.activityTitle}}</span><span v-else>暂无标题</span></a></h4>
+                        <a href="javascript:void(0);"><img :src="blog1.coverImageUrl" alt="" /></a>
+                        <h4><a href="javascript:void(0);"><span v-on:click="detail(blog1.actTime.slice(0,10),blog1.coverImageUrl,blog1.activityTitle,blog1.activityDescription)" v-if="blog1.activityTitle">{{blog1.activityTitle}}</span><span v-else>暂无标题</span></a></h4>
                         <p><span v-if="blog1.activityDescription">{{blog1.activityDescription}}</span><span v-else>暂无内容</span></p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
                 <div class="col-md-6 news-right">
                     <div class="news-right-grid">
-                        <a href="javascript:void(0);"><span v-on:click="detail(blog1.actTime.slice(0,10),blog2.activityCover,blog2.activityTitle,blog2.activityDescription)" v-if="blog2.activityTitle">{{blog2.activityTitle}}</span><span v-else>暂无标题</span></a>
+                        <a href="javascript:void(0);"><span v-on:click="detail(blog1.actTime.slice(0,10),blog2.coverImageUrl,blog2.activityTitle,blog2.activityDescription)" v-if="blog2.activityTitle">{{blog2.activityTitle}}</span><span v-else>暂无标题</span></a>
                         <h5 v-if="blog2.actTime"><span v-text="blog2.actTime.slice(0,4)"></span>年&nbsp;<span v-text="blog2.actTime.slice(5,7)"></span>月<span v-text="blog2.actTime.slice(8,10)"></span>日</h5>
                         <h5 v-else>暂无时间</h5>
                         <p><span v-if="blog2.activityDescription">{{blog2.activityDescription}}</span><span v-else>暂无内容</span></p>
                     </div>
                     <div class="news-right-grid">
-                        <a href="javascript:void(0);"><span v-on:click="detail(blog3.actTime.slice(0,10),blog3.activityCover,blog3.activityTitle,blog3.activityDescription)" v-if="blog3.activityTitle">{{blog3.activityTitle}}</span><span v-else>暂无标题</span></a>
+                        <a href="javascript:void(0);"><span v-on:click="detail(blog3.actTime.slice(0,10),blog3.coverImageUrl,blog3.activityTitle,blog3.activityDescription)" v-if="blog3.activityTitle">{{blog3.activityTitle}}</span><span v-else>暂无标题</span></a>
                         <h5 v-if="blog3.actTime"><span v-text="blog3.actTime.slice(0,4)"></span>年&nbsp;<span v-text="blog3.actTime.slice(5,7)"></span>月<span v-text="blog3.actTime.slice(8,10)"></span>日</h5>
                         <h5 v-else>暂无时间</h5>
                         <p><span v-if="blog3.activityDescription">{{blog3.activityDescription}}</span><span v-else>暂无内容</span></p>
                     </div>
                     <div class="news-right-grid">
-                        <a href="javascript:void(0);"><span v-on:click="detail(blog4.actTime.slice(0,10),blog4.activityCover,blog4.activityTitle,blog4.activityDescription)"  v-if="blog4.activityTitle">{{blog4.activityTitle}}</span><span v-else>暂无标题</span></a>
+                        <a href="javascript:void(0);"><span v-on:click="detail(blog4.actTime.slice(0,10),blog4.coverImageUrl,blog4.activityTitle,blog4.activityDescription)"  v-if="blog4.activityTitle">{{blog4.activityTitle}}</span><span v-else>暂无标题</span></a>
                         <h5 v-if="blog4.actTime"><span v-text="blog4.actTime.slice(0,4)"></span>年&nbsp;<span v-text="blog4.actTime.slice(5,7)"></span>月<span v-text="blog4.actTime.slice(8,10)"></span>日</h5>
                         <h5 v-else>暂无时间</h5>
                         <p><span v-if="blog4.activityDescription">{{blog4.activityDescription}}</span><span v-else>暂无内容</span></p>
@@ -324,15 +324,15 @@ export default {
             console.log(blogs)
             try {
                 this.blog1 = blogs[0]
-                this.blog1.activityCover = await this.api.getImage(this.blog1.activityCover)
+                this.blog1.coverImageUrl = this.api.baseAddress + this.blog1.coverImageUrl
                 this.blog2 = blogs[1]
-                this.blog2.activityCover = await this.api.getImage(this.blog2.activityCover)
+                this.blog2.coverImageUrl = this.api.baseAddress + this.blog2.coverImageUrl
                 this.blog3 = blogs[2]
-                this.blog3.activityCover = await this.api.getImage(this.blog3.activityCover)
+                this.blog3.coverImageUrl = this.api.baseAddress + this.blog3.coverImageUrl
                 this.blog4 = blogs[3]
-                this.blog4.activityCover = await this.api.getImage(this.blog4.activityCover)
+                this.blog4.coverImageUrl = this.api.baseAddress + this.blog4.coverImageUrl
                 this.blog5 = blogs[4]
-                this.blog5.activityCover = await this.api.getImage(this.blog5.activityCover)
+                this.blog5.coverImageUrl = this.api.baseAddress + this.blog5.coverImageUrl
             } catch (err) {
                 console.log('news', err)
             }

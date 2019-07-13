@@ -161,8 +161,9 @@ export default {
                     time: activities[i].actTime.slice(0, 10),
                     title: activities[i].activityTitle,
                     text: activities[i].activityDescription,
-                    cover: await this.api.getImage(activities[i].activityCover)
+                    cover: this.api.baseAddress+activities[i].coverImageUrl,
                 })
+                console.log(activities[i])
                 var flag = true
                 for (var j = 0; j < this.sites.length; j++) {
                     if (activities[i].actTime.slice(0, 7) == this.sites[j].name) {
